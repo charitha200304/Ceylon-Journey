@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceylon Journeys - Admin Dashboard</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Admin Dashboard Styles */
+        :root {
+            /* Light Mode Colors */
+            --primary-color: #2196f3;
+            --primary-dark: #1976d2;
+            --primary-light: #bbdefb;
+            --accent-color: #ff9800;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --info-color: #2196f3;
+
+            /* Sidebar */
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 70px;
+            --sidebar-bg: #ffffff;
+            --sidebar-hover: #f1f5f9;
+            --sidebar-active: #e3f2fd;
+            --sidebar-border: #e0e0e0;
+
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* Border Radius */
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+            /* Transitions */
+            --transition-speed: 0.3s;
+        }
+
+        /* Dark Mode Colors */
+        .dark-mode {
+            --primary-color: #90caf9;
+            --primary-dark: #42a5f5;
+            --primary-light: #1e3a5f;
+            --accent-color: #ffb74d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
+            --sidebar-bg: #1e1e1e;
+            --sidebar-hover: #333333;
+            --sidebar-active: #0d47a1;
+            --sidebar-border: #333333;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Admin Container */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width var(--transition-speed), transform var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--sidebar-border);
+            height: 70px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: var(--spacing-sm);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            transition: opacity var(--transition-speed);
+        }
+
+        .sidebar.collapsed .sidebar-header h2 {
+            opacity: 0;
+            width: 0;
+        }
+
+        .sidebar-toggle {
+            margin-left: auto;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xs);
+            border-radius: 50%;
+            transition: background-color var(--transition-speed);
+        }
+
+        .sidebar-toggle:hover {
+            background-color: var(--sidebar-hover);
+            color: var(--primary-color);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--sidebar-border);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: var(--spacing-md);
+        }
+
+        .user-info {
+            transition: opacity var(--transition-speed);
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .user-info h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-md) 0;
+        }
+
+        .sidebar-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            color: var(--text-secondary);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            border-radius: var(--border-radius-sm);
+            margin: 0 var(--spacing-sm);
+        }
+
+        .sidebar-nav li a i {
+            font-size: 1.2rem;
+            min-width: 24px;
+            margin-right: var(--spacing-md);
+        }
+
+        .sidebar-nav li a span {
+            white-space: nowrap;
+            transition: opacity var(--transition-speed);
+        }
+
+        .sidebar.collapsed .sidebar-nav li a span {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .sidebar-nav li a:hover {
+            background-color: var(--sidebar-hover);
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav li.active a {
+            background-color: var(--sidebar-active);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .sidebar-footer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .theme-toggle, .logout-btn {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            background-color: transparent;
+            border: none;
+            color: var(--text-secondary);
+            border-radius: var(--border-radius-sm);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .theme-toggle i, .logout-btn i {
+            font-size: 1.2rem;
+            margin-right: var(--spacing-md);
+        }
+
+        .theme-toggle span, .logout-btn span {
+            white-space: nowrap;
+            transition: opacity var(--transition-speed);
+        }
+
+        .sidebar.collapsed .theme-toggle span,
+        .sidebar.collapsed .logout-btn span {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover, .logout-btn:hover {
+            background-color: var(--sidebar-hover);
+            color: var(--primary-color);
+        }
+
+        .logout-btn {
+            color: var(--danger-color);
+        }
+
+        .logout-btn:hover {
+            color: var(--danger-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition-speed);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        .main-header {
+            height: 70px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing-xl);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) * 3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: border-color var(--transition-speed);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+        }
+
+        .notification-bell, .message-icon {
+            position: relative;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .notification-bell:hover, .message-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .notification-count, .message-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dashboard Content */
+        .content-section {
+            padding: var(--spacing-xl);
+        }
+
+        .section-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Dashboard Stats */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-lg);
+        }
+
+        .stat-icon i {
+            font-size: 1.5rem;
+        }
+
+        .stat-details h3 {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-change span {
+            color: var(--text-secondary);
+            margin-left: var(--spacing-xs);
+        }
+
+        .positive {
+            color: var(--success-color);
+        }
+
+        .negative {
+            color: var(--danger-color);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .dashboard-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .view-all-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .view-all-btn:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            padding: var(--spacing-md);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-md);
+            color: white;
+        }
+
+        .activity-icon.booking {
+            background-color: var(--primary-color);
+        }
+
+        .activity-icon.user {
+            background-color: var(--info-color);
+        }
+
+        .activity-icon.payment {
+            background-color: var(--success-color);
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .activity-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* Footer */
+        .main-footer {
+            margin-top: auto;
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: var(--sidebar-collapsed-width);
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+                width: var(--sidebar-width);
+            }
+
+            .sidebar.open .sidebar-header h2,
+            .sidebar.open .user-info,
+            .sidebar.open .sidebar-nav li a span,
+            .sidebar.open .theme-toggle span,
+            .sidebar.open .logout-btn span {
+                opacity: 1;
+                width: auto;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 var(--spacing-md);
+            }
+
+            .search-container {
+                width: 200px;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-header {
+                flex-direction: column;
+                height: auto;
+                padding: var(--spacing-md);
+                gap: var(--spacing-md);
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+<div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://via.placeholder.com/40" alt="Ceylon Journeys Logo" class="logo">
+            <h2>Ceylon Journeys</h2>
+            <button id="sidebar-toggle" class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-user">
+            <img src="https://via.placeholder.com/40" alt="Admin Avatar" class="user-avatar">
+            <div class="user-info">
+                <h3>Admin User</h3>
+                <p>Super Admin</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="admin-dashboard.html" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-booking-management.html" data-section="bookings">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Bookings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-user-management.html" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-hotel-management.html" data-section="hotels">
+                        <i class="fas fa-hotel"></i>
+                        <span>Hotels</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-package-management.html" data-section="packages">
+                        <i class="fas fa-box"></i>
+                        <span>Packages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-payment-management.html" data-section="payments">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="theme-toggle" class="theme-toggle">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+            <a href="login-selector-simple.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="main-header">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+
+            <div class="header-actions">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-envelope"></i>
+                    <span class="message-count">5</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section class="content-section">
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <p>Welcome back, Admin! Here's what's happening with Ceylon Journeys.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <i class="fas fa-calendar-check" style="color: #2196f3;"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Bookings</h3>
+                        <div class="stat-number">1,248</div>
+                        <div class="stat-change positive">
+                            +12.5% <span>from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(76, 175, 80, 0.1);">
+                        <i class="fas fa-users" style="color: #4caf50;"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Users</h3>
+                        <div class="stat-number">3,567</div>
+                        <div class="stat-change positive">
+                            +8.2% <span>from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(255, 152, 0, 0.1);">
+                        <i class="fas fa-dollar-sign" style="color: #ff9800;"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Revenue</h3>
+                        <div class="stat-number">$89,245</div>
+                        <div class="stat-change positive">
+                            +15.7% <span>from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(244, 67, 54, 0.1);">
+                        <i class="fas fa-hotel" style="color: #f44336;"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Hotels</h3>
+                        <div class="stat-number">126</div>
+                        <div class="stat-change negative">
+                            -3.1% <span>from last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Recent Bookings -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Recent Bookings</h3>
+                        <div class="card-actions">
+                            <button class="view-all-btn">View All</button>
+                        </div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon booking">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Kandy Cultural Tour</div>
+                                <div class="activity-description">Booked by John Smith for 3 people</div>
+                            </div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon booking">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Colombo City Tour</div>
+                                <div class="activity-description">Booked by Sarah Johnson for 2 people</div>
+                            </div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon booking">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Sigiriya Adventure</div>
+                                <div class="activity-description">Booked by Michael Brown for 4 people</div>
+                            </div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon booking">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Ella Hiking Tour</div>
+                                <div class="activity-description">Booked by Emily Davis for 2 people</div>
+                            </div>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Users -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Recent Users</h3>
+                        <div class="card-actions">
+                            <button class="view-all-btn">View All</button>
+                        </div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">John Smith</div>
+                                <div class="activity-description">john.smith@example.com</div>
+                            </div>
+                            <div class="activity-time">3 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Sarah Johnson</div>
+                                <div class="activity-description">sarah.j@example.com</div>
+                            </div>
+                            <div class="activity-time">6 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Michael Brown</div>
+                                <div class="activity-description">michael.b@example.com</div>
+                            </div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Emily Davis</div>
+                                <div class="activity-description">emily.d@example.com</div>
+                            </div>
+                            <div class="activity-time">3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Payments -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Recent Payments</h3>
+                        <div class="card-actions">
+                            <button class="view-all-btn">View All</button>
+                        </div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon payment">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Payment #12345</div>
+                                <div class="activity-description">$1,250 - Kandy Cultural Tour</div>
+                            </div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Payment #12344</div>
+                                <div class="activity-description">$850 - Colombo City Tour</div>
+                            </div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Payment #12343</div>
+                                <div class="activity-description">$1,450 - Sigiriya Adventure</div>
+                            </div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Payment #12342</div>
+                                <div class="activity-description">$950 - Ella Hiking Tour</div>
+                            </div>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Destinations -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Popular Destinations</h3>
+                        <div class="card-actions">
+                            <button class="view-all-btn">View All</button>
+                        </div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: rgba(33, 150, 243, 0.1);">
+                                <i class="fas fa-map-marker-alt" style="color: #2196f3;"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Kandy</div>
+                                <div class="activity-description">245 bookings this month</div>
+                            </div>
+                            <div class="activity-time">28%</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: rgba(76, 175, 80, 0.1);">
+                                <i class="fas fa-map-marker-alt" style="color: #4caf50;"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Sigiriya</div>
+                                <div class="activity-description">198 bookings this month</div>
+                            </div>
+                            <div class="activity-time">22%</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: rgba(255, 152, 0, 0.1);">
+                                <i class="fas fa-map-marker-alt" style="color: #ff9800;"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Ella</div>
+                                <div class="activity-description">176 bookings this month</div>
+                            </div>
+                            <div class="activity-time">19%</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: rgba(244, 67, 54, 0.1);">
+                                <i class="fas fa-map-marker-alt" style="color: #f44336;"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Galle</div>
+                                <div class="activity-description">152 bookings this month</div>
+                            </div>
+                            <div class="activity-time">17%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="main-footer">
+            <p>&copy; 2023 Ceylon Journeys. All rights reserved.</p>
+        </footer>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sidebar Toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle('open');
+            }
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+        const themeText = themeToggle.querySelector('span');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            themeText.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Mobile menu handling
+        function handleResize() {
+            if (window.innerWidth < 992) {
+                sidebar.classList.add('collapsed');
+                sidebar.classList.remove('open');
+            } else {
+                sidebar.classList.remove('collapsed');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Call on initial load
+    });
+</script>
+</body>
+</html>

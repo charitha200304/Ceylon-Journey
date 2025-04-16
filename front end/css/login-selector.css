@@ -1,0 +1,209 @@
+/* Login Selector Page Styles - Ceylon Journeys */
+
+/* Login Selector Section */
+.login-selector-section {
+  padding: 80px 0;
+}
+
+.login-options {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.login-option {
+  flex: 1;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 40px 30px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-option:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.login-option::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: var(--primary-color);
+}
+
+.login-option.admin::before {
+  background-color: var(--secondary-color);
+}
+
+.option-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(0, 191, 166, 0.1);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto 25px;
+}
+
+.login-option.admin .option-icon {
+  background-color: rgba(26, 83, 92, 0.1);
+  color: var(--secondary-color);
+}
+
+.login-option h2 {
+  margin-bottom: 15px;
+  color: var(--secondary-color);
+}
+
+.login-option p {
+  margin-bottom: 25px;
+  color: var(--text-light);
+}
+
+.option-features {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.option-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.option-features i {
+  color: var(--primary-color);
+}
+
+.login-option.admin .option-features i {
+  color: var(--secondary-color);
+}
+
+.login-option .btn {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+}
+
+.option-footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.option-footer a {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.login-option.admin .option-footer a {
+  color: var(--secondary-color);
+}
+
+/* Login Help Section */
+.login-help {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 30px;
+  text-align: center;
+}
+
+.login-help h3 {
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.help-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.help-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.help-option:hover {
+  background-color: var(--bg-light);
+}
+
+.help-option i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.help-option span {
+  font-weight: 500;
+}
+
+/* Dark Mode Adjustments */
+.dark .login-option,
+.dark .login-help {
+  background-color: var(--card-bg);
+}
+
+.dark .option-icon {
+  background-color: rgba(0, 230, 195, 0.1);
+}
+
+.dark .login-option.admin .option-icon {
+  background-color: rgba(58, 124, 133, 0.1);
+}
+
+.dark .help-option:hover {
+  background-color: var(--bg-light);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .login-options {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-selector-section {
+    padding: 60px 0;
+  }
+
+  .help-options {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .help-option {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-option {
+    padding: 30px 20px;
+  }
+
+  .option-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
+}
+

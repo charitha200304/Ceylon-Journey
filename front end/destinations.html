@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinations - Ceylon Journeys</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+      <div class="logo">
+          <a href="index.html">Ceylon<span>Journeys</span></a>
+      </div>
+      <nav>
+          <ul class="nav-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="destinations.html" class="active">Destinations</a></li>
+              <li><a href="packages.html">Packages</a></li>
+              <li><a href="guide.html">Guide</a></li>
+              <li><a href="education.html">Education</a></li>
+              <li><a href="reviews.html">Reviews</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>
+      </nav>
+      <!-- <div class="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
+          <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
+      </div> -->
+      <div class="auth-buttons">
+          <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+          <a href="booking.html" class="btn btn-primary">Book Now</a>
+      </div>
+      <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="page-banner" style="background-image: url('images/beautiful-tropical-beach-sea-with-coconut-palm-tree.jpg');">
+      <div class="banner-content">
+          <h1>Explore Sri Lanka</h1>
+          <p>Discover the most beautiful destinations in the pearl of the Indian Ocean</p>
+      </div>
+  </section>
+
+  <!-- Destination Categories -->
+  <section class="destination-categories">
+      <div class="container">
+          <div class="category-tabs">
+              <button class="category-tab active" data-category="all">All Destinations</button>
+              <button class="category-tab" data-category="beaches">Beaches</button>
+              <button class="category-tab" data-category="cultural">Cultural Sites</button>
+              <button class="category-tab" data-category="wildlife">Wildlife</button>
+              <button class="category-tab" data-category="hills">Hill Country</button>
+          </div>
+          
+          <div class="destination-search">
+              <input type="text" id="destination-search" placeholder="Search destinations...">
+              <button><i class="fas fa-search"></i></button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Destinations Grid -->
+  <section class="destinations-grid">
+      <div class="container">
+          <div class="destination-items">
+              <!-- Cultural Sites -->
+              <div class="destination-item" data-category="cultural" id="sigiriya">
+                  <div class="destination-card large">
+                      <img src="images/segiriya.jpeg" alt="Sigiriya Rock Fortress">
+                      <div class="destination-info">
+                          <div class="destination-category">Cultural Heritage</div>
+                          <h3>Sigiriya Rock Fortress</h3>
+                          <p>Ancient rock fortress with stunning frescoes and landscaped gardens, a UNESCO World Heritage site.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> Central Province</span>
+                              <span><i class="fas fa-star"></i> 4.8 (320 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=sigiriya" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="destination-item" data-category="cultural" id="kandy">
+                  <div class="destination-card">
+                      <img src="images/templeoftooth.jpg" alt="Kandy">
+                      <div class="destination-info">
+                          <div class="destination-category">Cultural Heritage</div>
+                          <h3>Kandy</h3>
+                          <p>Cultural capital with the sacred Temple of the Tooth Relic and beautiful Kandy Lake.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> Central Province</span>
+                              <span><i class="fas fa-star"></i> 4.7 (280 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=kandy" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="destination-item" data-category="cultural" id="anuradhapura">
+                  <div class="destination-card">
+                      <img src="images/jayasrimahabodi2.jpg" alt="Anuradhapura">
+                      <div class="destination-info">
+                          <div class="destination-category">Ancient City</div>
+                          <h3>Anuradhapura</h3>
+                          <p>Ancient city with well-preserved ruins, stupas, and the sacred Sri Maha Bodhi tree.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> North Central Province</span>
+                              <span><i class="fas fa-star"></i> 4.6 (210 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=anuradhapura" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Beaches -->
+              <div class="destination-item" data-category="beaches" id="mirissa">
+                  <div class="destination-card">
+                      <img src="images/Palm-tree-grove-Mirissa.jpg" alt="Mirissa Beach">
+                      <div class="destination-info">
+                          <div class="destination-category">Beach</div>
+                          <h3>Mirissa Beach</h3>
+                          <p>Beautiful crescent-shaped beach known for whale watching and surfing.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> Southern Province</span>
+                              <span><i class="fas fa-star"></i> 4.8 (350 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=mirissa" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="destination-item" data-category="beaches" id="unawatuna">
+                  <div class="destination-card">
+                      <img src="images/unawatunaBeach.jpg" alt="Unawatuna Beach">
+                      <div class="destination-info">
+                          <div class="destination-category">Beach</div>
+                          <h3>Unawatuna Beach</h3>
+                          <p>Picturesque bay with coral reefs, perfect for swimming and snorkeling.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> Southern Province</span>
+                              <span><i class="fas fa-star"></i> 4.7 (290 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=unawatuna" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Wildlife -->
+              <div class="destination-item" data-category="wildlife" id="yala">
+                  <div class="destination-card large">
+                      <img src="images/yala-national-park-jeep-safari_63573.jpg" alt="Yala National Park">
+                      <div class="destination-info">
+                          <div class="destination-category">Wildlife</div>
+                          <h3>Yala National Park</h3>
+                          <p>Famous for having the highest leopard density in the world, along with elephants, sloth bears, and diverse birdlife.</p>
+                          <div class="destination-meta">
+                              <span><i class="fas fa-map-marker-alt"></i> Southern Province</span>
+                              <span><i class="fas fa-star"></i> 4.9 (420 reviews)</span>
+                          </div>
+                          <a href="destination-detail.html?id=yala" class="btn btn-primary">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- More destinations would be here -->
+          </div>
+          
+          <div class="pagination">
+              <button class="pagination-btn active">1</button>
+              <button class="pagination-btn">2</button>
+              <button class="pagination-btn">3</button>
+              <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section bg-light">
+      <div class="container">
+          <div class="section-header">
+              <h2>Explore Sri Lanka Map</h2>
+              <p>Find destinations by region</p>
+          </div>
+          <div class="map-container">
+              <div class="sri-lanka-map">
+                  <!-- Interactive map will be implemented with JavaScript -->
+                  <img src="images/sri-lanka-surfing-location-map.webp" alt="Sri Lanka Map" class="responsive-map">
+              </div>
+              <div class="map-sidebar">
+                  <h3>Regions of Sri Lanka</h3>
+                  <ul class="region-list">
+                      <li><a href="#" data-region="north">Northern Province</a></li>
+                      <li><a href="#" data-region="north-central">North Central Province</a></li>
+                      <li><a href="#" data-region="east">Eastern Province</a></li>
+                      <li><a href="#" data-region="central">Central Province</a></li>
+                      <li><a href="#" data-region="west">Western Province</a></li>
+                      <li><a href="#" data-region="south">Southern Province</a></li>
+                      <li><a href="#" data-region="uva">Uva Province</a></li>
+                      <li><a href="#" data-region="sabaragamuwa">Sabaragamuwa Province</a></li>
+                      <li><a href="#" data-region="north-west">North Western Province</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+      <div class="container">
+          <div class="newsletter-content">
+              <h2>Subscribe to Our Newsletter</h2>
+              <p>Get exclusive deals, travel tips, and updates delivered to your inbox</p>
+              <form class="newsletter-form">
+                  <input type="email" placeholder="Your email address">
+                  <button type="submit" class="btn btn-primary">Subscribe</button>
+              </form>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <div class="container">
+          <div class="footer-content">
+              <div class="footer-column">
+                  <div class="footer-logo">
+                      <a href="index.html">Ceylon<span>Journeys</span></a>
+                  </div>
+                  <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                  </div>
+              </div>
+              <div class="footer-column">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="destinations.html">Destinations</a></li>
+                      <li><a href="packages.html">Packages</a></li>
+                      <li><a href="guide.html">Guide</a></li>
+                      <li><a href="reviews.html">Reviews</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Services</h3>
+                  <ul class="footer-links">
+                      <li><a href="hotels.html">Hotel Booking</a></li>
+                      <li><a href="guides.html">Tour Guides</a></li>
+                      <li><a href="vehicles.html">Vehicle Rental</a></li>
+                      <li><a href="education.html">Education Tours</a></li>
+                      <li><a href="custom.html">Custom Packages</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Contact Us</h3>
+                  <ul class="contact-info">
+                      <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+                      <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+                      <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+                      <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+              <div class="footer-bottom-links">
+                  <a href="privacy.html">Privacy Policy</a>
+                  <a href="terms.html">Terms & Conditions</a>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/theme.js"></script>
+</body>
+</html>
+

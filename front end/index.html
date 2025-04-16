@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceylon Journeys - Discover Sri Lanka</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+      <div class="logo">
+          <a href="index.html">Ceylon<span>Journeys</span></a>
+      </div>
+      <nav>
+          <ul class="nav-links">
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="destinations.html">Destinations</a></li>
+              <li><a href="packages.html">Packages</a></li>
+              <li><a href="guide.html">Guide</a></li>
+              <li><a href="education.html">Education</a></li>
+              <li><a href="reviews.html">Reviews</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>
+      </nav>
+      <!-- <div class="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
+          <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
+      </div> -->
+      <div class="auth-buttons">
+          <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+          <a href="booking.html" class="btn btn-primary">Book Now</a>
+      </div>
+      <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+      <div class="hero-content">
+          <h1>Discover the World's Most Amazing Places</h1>
+          <p>Find and book your perfect trip with exclusive deals and personalized recommendations.</p>
+          
+          <div class="search-container">
+              <h2>Choose your Travel location:</h2>
+              <form class="search-form">
+                  <div class="form-group">
+                      <input type="text" placeholder="Destination name">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" placeholder="MM/DD/YYYY" onfocus="(this.type='date')">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" placeholder="Price ($)">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Search</button>
+              </form>
+          </div>
+      </div>
+  </section>
+
+  <!-- Popular Destinations -->
+  <section class="destinations">
+      <div class="container">
+          <div class="section-header">
+              <h2>Popular Destinations in Sri Lanka</h2>
+              <p>Explore the beauty and culture of this tropical paradise</p>
+          </div>
+          <div class="destination-grid">
+              <div class="destination-card">
+                  <img src="images/segiriya.jpeg" alt="Sigiriya Rock Fortress">
+                  <div class="destination-info">
+                      <h3>Sigiriya</h3>
+                      <p>Ancient rock fortress with stunning views</p>
+                      <a href="destinations.html#sigiriya" class="btn btn-outline">Explore</a>
+                  </div>
+              </div>
+              <div class="destination-card">
+                  <img src="images/templeoftooth.jpg" alt="Kandy">
+                  <div class="destination-info">
+                      <h3>Kandy</h3>
+                      <p>Cultural capital with the Temple of the Tooth</p>
+                      <a href="destinations.html#kandy" class="btn btn-outline">Explore</a>
+                  </div>
+              </div>
+              <div class="destination-card">
+                  <img src="images/nine-arch-2-5.jpg" alt="Ella">
+                  <div class="destination-info">
+                      <h3>Ella</h3>
+                      <p>Scenic mountain village with tea plantations</p>
+                      <a href="destinations.html#ella" class="btn btn-outline">Explore</a>
+                  </div>
+              </div>
+              <!-- <div class="destination-card">
+                  <img src="images/galle-fort-1050x700-1.jpg" alt="Galle Fort">
+                  <div class="destination-info">
+                      <h3>Galle Fort</h3>
+                      <p>Historic Dutch colonial fort by the sea</p>
+                      <a href="destinations.html#galle" class="btn btn-outline">Explore</a>
+                  </div>
+              </div> -->
+          </div>
+          <div class="view-all">
+              <a href="destinations.html" class="btn btn-secondary">View All Destinations</a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Travel Packages -->
+  <section class="packages bg-light">
+      <div class="container">
+          <div class="section-header">
+              <h2>Customized Travel Packages</h2>
+              <p>Find the perfect package for every budget</p>
+          </div>
+          <div class="package-grid">
+              <div class="package-card">
+                  <div class="package-badge">Popular</div>
+                  <img src="images/Polonnaruwa-Day-Tour-Banner-1-1024x640.jpg" alt="Cultural Tour">
+                  <div class="package-info">
+                      <h3>Cultural Heritage Tour</h3>
+                      <p class="duration"><i class="fas fa-clock"></i> 7 Days / 6 Nights</p>
+                      <p>Explore ancient cities, temples, and cultural sites</p>
+                      <div class="package-footer">
+                          <span class="price">From $899</span>
+                          <a href="packages.html#cultural" class="btn btn-outline">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="package-card">
+                  <img src="images/kk-beach-sri-lanka-beach.webp" alt="Beach Tour">
+                  <div class="package-info">
+                      <h3>Tropical Beach Getaway</h3>
+                      <p class="duration"><i class="fas fa-clock"></i> 5 Days / 4 Nights</p>
+                      <p>Relax on pristine beaches and enjoy water activities</p>
+                      <div class="package-footer">
+                          <span class="price">From $699</span>
+                          <a href="packages.html#beach" class="btn btn-outline">View Details</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="package-card">
+                  <div class="package-badge">Best Value</div>
+                  <img src="images/yala-national-park-jeep-safari_63573.jpg" alt="Adventure Tour">
+                  <div class="package-info">
+                      <h3>Adventure & Wildlife Safari</h3>
+                      <p class="duration"><i class="fas fa-clock"></i> 8 Days / 7 Nights</p>
+                      <p>Hiking, wildlife safaris, and thrilling adventures</p>
+                      <div class="package-footer">
+                          <span class="price">From $1,099</span>
+                          <a href="packages.html#adventure" class="btn btn-outline">View Details</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="view-all">
+              <a href="packages.html" class="btn btn-secondary">View All Packages</a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Education Section -->
+  <section class="education">
+      <div class="container">
+          <div class="section-header">
+              <h2>Study in Sri Lanka</h2>
+              <p>Discover academic opportunities for international students</p>
+          </div>
+          <div class="education-content">
+              <div class="education-image">
+                  <img src="images/SLIIT-malabe.jpg" alt="University in Sri Lanka">
+              </div>
+              <div class="education-info">
+                  <h3>Educational Opportunities</h3>
+                  <p>Sri Lanka offers excellent educational opportunities for international students with world-class universities and affordable tuition fees.</p>
+                  <ul class="education-features">
+                      <li><i class="fas fa-university"></i> Top-ranked universities</li>
+                      <li><i class="fas fa-book"></i> Diverse range of courses</li>
+                      <li><i class="fas fa-dollar-sign"></i> Affordable tuition fees</li>
+                      <li><i class="fas fa-globe"></i> International student support</li>
+                  </ul>
+                  <a href="education.html" class="btn btn-primary">Learn More</a>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials bg-light">
+      <div class="container">
+          <div class="section-header">
+              <h2>What Our Travelers Say</h2>
+              <p>Experiences from our satisfied customers</p>
+          </div>
+          <div class="testimonial-slider">
+              <div class="testimonial-card">
+                  <div class="testimonial-content">
+                      <p>"Our trip to Sri Lanka was absolutely amazing! Ceylon Journeys took care of everything, from hotels to transportation. The guides were knowledgeable and friendly."</p>
+                  </div>
+                  <div class="testimonial-author">
+                      <img src="images/saraImage.jpeg" alt="Sarah Johnson">
+                      <div class="author-info">
+                          <h4>Sarah Johnson</h4>
+                          <p>United Kingdom</p>
+                          <div class="rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="testimonial-card">
+                  <div class="testimonial-content">
+                      <p>"As a student, I was looking for affordable options to study abroad. Ceylon Journeys helped me find the perfect university in Sri Lanka and assisted with all the paperwork."</p>
+                  </div>
+                  <div class="testimonial-author">
+                      <img src="images/micheImage.jpeg" alt="Michael Chen">
+                      <div class="author-info">
+                          <h4>Michael Chen</h4>
+                          <p>Canada</p>
+                          <div class="rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star-half-alt"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="testimonial-controls">
+              <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+              <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+      <div class="container">
+          <div class="newsletter-content">
+              <h2>Subscribe to Our Newsletter</h2>
+              <p>Get exclusive deals, travel tips, and updates delivered to your inbox</p>
+              <form class="newsletter-form">
+                  <input type="email" placeholder="Your email address">
+                  <button type="submit" class="btn btn-primary">Subscribe</button>
+              </form>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <div class="container">
+          <div class="footer-content">
+              <div class="footer-column">
+                  <div class="footer-logo">
+                      <a href="index.html">Ceylon<span>Journeys</span></a>
+                  </div>
+                  <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                  </div>
+              </div>
+              <div class="footer-column">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="destinations.html">Destinations</a></li>
+                      <li><a href="packages.html">Packages</a></li>
+                      <li><a href="guide.html">Guide</a></li>
+                      <li><a href="reviews.html">Reviews</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Services</h3>
+                  <ul class="footer-links">
+                      <li><a href="hotels.html">Hotel Booking</a></li>
+                      <li><a href="guides.html">Tour Guides</a></li>
+                      <li><a href="vehicles.html">Vehicle Rental</a></li>
+                      <li><a href="education.html">Education Tours</a></li>
+                      <li><a href="custom.html">Custom Packages</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Contact Us</h3>
+                  <ul class="contact-info">
+                      <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+                      <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+                      <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+                      <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+              <div class="footer-bottom-links">
+                  <a href="privacy.html">Privacy Policy</a>
+                  <a href="terms.html">Terms & Conditions</a>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/theme.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews - Ceylon Journeys</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reviews.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+      <div class="logo">
+          <a href="index.html">Ceylon<span>Journeys</span></a>
+      </div>
+      <nav>
+          <ul class="nav-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="destinations.html">Destinations</a></li>
+              <li><a href="packages.html">Packages</a></li>
+              <li><a href="guide.html">Guide</a></li>
+              <li><a href="education.html">Education</a></li>
+              <li><a href="reviews.html" class="active">Reviews</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>
+      </nav>
+      <!-- <div class="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
+          <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
+      </div> -->
+      <div class="auth-buttons">
+          <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+          <a href="booking.html" class="btn btn-primary">Book Now</a>
+      </div>
+      <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="page-banner" style="background-image: url('images/online-customer-satisfaction-survey-service-260nw-2480519563.webp');">
+      <div class="banner-content">
+          <h1>Customer Reviews</h1>
+          <p>Hear what our travelers have to say about their experiences</p>
+      </div>
+  </section>
+
+  <!-- Reviews Overview -->
+  <section class="reviews-overview">
+      <div class="container">
+          <div class="reviews-stats">
+              <div class="stats-card">
+                  <div class="stats-number">4.8</div>
+                  <div class="stats-stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <div class="stats-text">Overall Rating</div>
+              </div>
+              <div class="stats-breakdown">
+                  <div class="breakdown-item">
+                      <div class="breakdown-label">5 Stars</div>
+                      <div class="breakdown-bar">
+                          <div class="breakdown-fill" style="width: 75%;"></div>
+                      </div>
+                      <div class="breakdown-percent">75%</div>
+                  </div>
+                  <div class="breakdown-item">
+                      <div class="breakdown-label">4 Stars</div>
+                      <div class="breakdown-bar">
+                          <div class="breakdown-fill" style="width: 18%;"></div>
+                      </div>
+                      <div class="breakdown-percent">18%</div>
+                  </div>
+                  <div class="breakdown-item">
+                      <div class="breakdown-label">3 Stars</div>
+                      <div class="breakdown-bar">
+                          <div class="breakdown-fill" style="width: 5%;"></div>
+                      </div>
+                      <div class="breakdown-percent">5%</div>
+                  </div>
+                  <div class="breakdown-item">
+                      <div class="breakdown-label">2 Stars</div>
+                      <div class="breakdown-bar">
+                          <div class="breakdown-fill" style="width: 1%;"></div>
+                      </div>
+                      <div class="breakdown-percent">1%</div>
+                  </div>
+                  <div class="breakdown-item">
+                      <div class="breakdown-label">1 Star</div>
+                      <div class="breakdown-bar">
+                          <div class="breakdown-fill" style="width: 1%;"></div>
+                      </div>
+                      <div class="breakdown-percent">1%</div>
+                  </div>
+              </div>
+              <div class="stats-highlights">
+                  <div class="highlight-item">
+                      <div class="highlight-number">98%</div>
+                      <div class="highlight-text">Would recommend us</div>
+                  </div>
+                  <div class="highlight-item">
+                      <div class="highlight-number">750+</div>
+                      <div class="highlight-text">Happy travelers</div>
+                  </div>
+                  <div class="highlight-item">
+                      <div class="highlight-number">5</div>
+                      <div class="highlight-text">Years of excellence</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Review Filters -->
+  <section class="review-filters">
+      <div class="container">
+          <div class="filter-container">
+              <div class="filter-group">
+                  <label for="package-type">Package Type:</label>
+                  <select id="package-type">
+                      <option value="all">All Packages</option>
+                      <option value="cultural">Cultural Tours</option>
+                      <option value="adventure">Adventure Tours</option>
+                      <option value="beach">Beach Getaways</option>
+                      <option value="education">Educational Tours</option>
+                  </select>
+              </div>
+              <div class="filter-group">
+                  <label for="rating">Rating:</label>
+                  <select id="rating">
+                      <option value="all">All Ratings</option>
+                      <option value="5">5 Stars</option>
+                      <option value="4">4 Stars & Up</option>
+                      <option value="3">3 Stars & Up</option>
+                  </select>
+              </div>
+              <div class="filter-group">
+                  <label for="sort-by">Sort By:</label>
+                  <select id="sort-by">
+                      <option value="recent">Most Recent</option>
+                      <option value="highest">Highest Rating</option>
+                      <option value="lowest">Lowest Rating</option>
+                  </select>
+              </div>
+              <button class="btn btn-primary filter-btn">Apply Filters</button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Reviews Grid -->
+  <section class="reviews-grid">
+      <div class="container">
+          <div class="reviews-list">
+              <!-- Review 1 -->
+              <div class="review-card">
+                  <div class="review-header">
+                      <div class="reviewer-info">
+                          <img src="images/saraImage.jpeg" alt="Sarah Johnson" class="reviewer-img">
+                          <div class="reviewer-details">
+                              <h3>Sarah Johnson</h3>
+                              <p>United Kingdom</p>
+                              <div class="review-package">Cultural Heritage Tour</div>
+                          </div>
+                      </div>
+                      <div class="review-rating">
+                          <div class="rating-stars">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                          <div class="review-date">June 15, 2024</div>
+                      </div>
+                  </div>
+                  <div class="review-content">
+                      <h4>Absolutely Amazing Experience!</h4>
+                      <p>Our trip to Sri Lanka was absolutely amazing! Ceylon Journeys took care of everything, from hotels to transportation. The guides were knowledgeable and friendly. We particularly enjoyed the visit to Sigiriya and the Temple of the Tooth in Kandy. The accommodations were comfortable and the food was delicious. I would highly recommend this tour to anyone interested in exploring Sri Lanka's rich cultural heritage.</p>
+                  </div>
+                  <div class="review-photos">
+                      <img src="images/galle-fort-1050x700-1.jpg" alt="Review Photo" class="review-photo">
+                      <img src="images/Palm-tree-grove-Mirissa.jpg" alt="Review Photo" class="review-photo">
+                      <img src="images/segiriya.jpeg" alt="Review Photo" class="review-photo">
+                  </div>
+              </div>
+
+              <!-- Review 2 -->
+              <div class="review-card">
+                  <div class="review-header">
+                      <div class="reviewer-info">
+                          <img src="images/micheImage.jpeg" alt="Michael Chen" class="reviewer-img">
+                          <div class="reviewer-details">
+                              <h3>Michael Chen</h3>
+                              <p>Canada</p>
+                              <div class="review-package">Educational Discovery Tour</div>
+                          </div>
+                      </div>
+                      <div class="review-rating">
+                          <div class="rating-stars">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star-half-alt"></i>
+                          </div>
+                          <div class="review-date">May 28, 2024</div>
+                      </div>
+                  </div>
+                  <div class="review-content">
+                      <h4>Perfect Educational Tour</h4>
+                      <p>As a student, I was looking for affordable options to study abroad. Ceylon Journeys helped me find the perfect university in Sri Lanka and assisted with all the paperwork. The educational tour was informative and well-organized. We visited several universities and had meetings with faculty members. The team at Ceylon Journeys was very supportive throughout the process. I'm now enrolled at the University of Colombo and couldn't be happier with my decision.</p>
+                  </div>
+              </div>
+
+              <!-- Review 3 -->
+              <div class="review-card">
+                  <div class="review-header">
+                      <div class="reviewer-info">
+                          <img src="images/emma&david.jpg" alt="Emma and David" class="reviewer-img">
+                          <div class="reviewer-details">
+                              <h3>Emma and David</h3>
+                              <p>Australia</p>
+                              <div class="review-package">Adventure & Wildlife Safari</div>
+                          </div>
+                      </div>
+                      <div class="review-rating">
+                          <div class="rating-stars">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                          <div class="review-date">April 10, 2024</div>
+                      </div>
+                  </div>
+                  <div class="review-content">
+                      <h4>Unforgettable Wildlife Experience</h4>
+                      <p>We had an incredible time on the Adventure & Wildlife Safari tour. Seeing elephants and leopards in their natural habitat was a dream come true. The white water rafting in Kitulgala was exhilarating! Our guide, Sanjay, was exceptional - knowledgeable about wildlife and always ensuring our safety and comfort. The accommodations were better than expected, especially the eco-lodge in Yala. Ceylon Journeys delivered everything they promised and more.</p>
+                  </div>
+                  <div class="review-photos">
+                      <img src="images/nine-arch-2-5.jpg" alt="Review Photo" class="review-photo">
+                      <img src="images/Polonnaruwa-Day-Tour-Banner-1-1024x640.jpg" alt="Review Photo" class="review-photo">
+                  </div>
+              </div>
+
+              <!-- More reviews would be here -->
+          </div>
+          
+          <div class="pagination">
+              <button class="pagination-btn active">1</button>
+              <button class="pagination-btn">2</button>
+              <button class="pagination-btn">3</button>
+              <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Write a Review -->
+  <section class="write-review bg-light">
+      <div class="container">
+          <div class="section-header">
+              <h2>Share Your Experience</h2>
+              <p>Tell us about your journey with Ceylon Journeys</p>
+          </div>
+          
+          <div class="review-form-container">
+              <form class="review-form">
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="review-name">Your Name</label>
+                          <input type="text" id="review-name" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="review-email">Email Address</label>
+                          <input type="email" id="review-email" required>
+                      </div>
+                  </div>
+                  
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="review-country">Country</label>
+                          <input type="text" id="review-country">
+                      </div>
+                      <div class="form-group">
+                          <label for="review-package">Package/Service</label>
+                          <select id="review-package" required>
+                              <option value="">Select a package</option>
+                              <option value="cultural">Cultural Heritage Tour</option>
+                              <option value="beach">Tropical Beach Getaway</option>
+                              <option value="adventure">Adventure & Wildlife Safari</option>
+                              <option value="family">Family Fun Package</option>
+                              <option value="honeymoon">Romantic Honeymoon Escape</option>
+                              <option value="education">Educational Discovery Tour</option>
+                              <option value="ayurveda">Ayurveda & Wellness Retreat</option>
+                              <option value="photography">Photography Expedition</option>
+                              <option value="budget">Budget Explorer</option>
+                              <option value="custom">Custom Package</option>
+                              <option value="other">Other</option>
+                          </select>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="review-title">Review Title</label>
+                      <input type="text" id="review-title" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="review-content">Your Review</label>
+                      <textarea id="review-content" rows="6" required></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label>Your Rating</label>
+                      <div class="rating-input">
+                          <i class="far fa-star" data-rating="1"></i>
+                          <i class="far fa-star" data-rating="2"></i>
+                          <i class="far fa-star" data-rating="3"></i>
+                          <i class="far fa-star" data-rating="4"></i>
+                          <i class="far fa-star" data-rating="5"></i>
+                      </div>
+                      <input type="hidden" name="rating" value="0">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="review-photos">Upload Photos (optional)</label>
+                      <input type="file" id="review-photos" multiple accept="image/*">
+                  </div>
+                  
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Submit Review</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+      <div class="container">
+          <div class="newsletter-content">
+              <h2>Subscribe to Our Newsletter</h2>
+              <p>Get exclusive deals, travel tips, and updates delivered to your inbox</p>
+              <form class="newsletter-form">
+                  <input type="email" placeholder="Your email address">
+                  <button type="submit" class="btn btn-primary">Subscribe</button>
+              </form>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <div class="container">
+          <div class="footer-content">
+              <div class="footer-column">
+                  <div class="footer-logo">
+                      <a href="index.html">Ceylon<span>Journeys</span></a>
+                  </div>
+                  <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                  </div>
+              </div>
+              <div class="footer-column">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="destinations.html">Destinations</a></li>
+                      <li><a href="packages.html">Packages</a></li>
+                      <li><a href="guide.html">Guide</a></li>
+                      <li><a href="reviews.html">Reviews</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Services</h3>
+                  <ul class="footer-links">
+                      <li><a href="hotels.html">Hotel Booking</a></li>
+                      <li><a href="guides.html">Tour Guides</a></li>
+                      <li><a href="vehicles.html">Vehicle Rental</a></li>
+                      <li><a href="education.html">Education Tours</a></li>
+                      <li><a href="custom.html">Custom Packages</a></li>
+                  </ul>
+              </div>
+              <div class="footer-column">
+                  <h3>Contact Us</h3>
+                  <ul class="contact-info">
+                      <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+                      <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+                      <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+                      <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+              <div class="footer-bottom-links">
+                  <a href="privacy.html">Privacy Policy</a>
+                  <a href="terms.html">Terms & Conditions</a>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/theme.js"></script>
+</body>
+</html>
+
