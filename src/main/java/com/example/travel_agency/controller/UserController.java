@@ -1,5 +1,8 @@
 package com.example.travel_agency.controller;
 
+import com.example.travel_agency.dto.UserDTO;
+import com.example.travel_agency.service.JWTService;
+import com.example.travel_agency.service.UserService;
 import com.example.travel_agency.util.ResponseUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

@@ -5,6 +5,8 @@ import com.example.travel_agency.dto.UserDTO;
 import com.example.travel_agency.dto.UserLoginDTO;
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.UsersRepo;
+import com.example.travel_agency.service.JWTService;
+import com.example.travel_agency.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

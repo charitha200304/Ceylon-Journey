@@ -1,5 +1,8 @@
 package com.example.travel_agency.controller;
 
+import com.example.travel_agency.dto.AuthTokenDTO;
+import com.example.travel_agency.dto.UserLoginDTO;
+import com.example.travel_agency.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

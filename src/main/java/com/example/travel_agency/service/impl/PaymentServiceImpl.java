@@ -5,6 +5,7 @@ import com.example.travel_agency.entity.Payment;
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.PaymentRepo;
 import com.example.travel_agency.repository.UsersRepo;
+import com.example.travel_agency.service.PaymentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
