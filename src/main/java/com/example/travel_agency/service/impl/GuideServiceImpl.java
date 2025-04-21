@@ -3,7 +3,6 @@ package com.example.travel_agency.service.impl;
 import com.example.travel_agency.dto.GuideDTO;
 import com.example.travel_agency.entity.Guide;
 import com.example.travel_agency.repository.GuideRepo;
-import com.example.travel_agency.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

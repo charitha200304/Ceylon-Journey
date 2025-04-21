@@ -2,6 +2,7 @@ package com.example.travel_agency.service;
 
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.UsersRepo;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +25,11 @@ public class MyUserDetailService implements UserDetailsService {
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.get().getUsername())
-                .password(user.get().getPassword())  // Ensure password is encoded
-                .roles(String.valueOf(user.get().getRole())) // Use roles from the database
-                .build();
+        return new org.springframework.security.core.userdetails.User(
+                user.get().getUsername(),
+                user.get().getPassword(), // Assuming password in DB is already encoded
+                AuthorityUtils.createAuthorityList("ROLE_" + user.get().getRole()) // Add ROLE_ prefix
+        );
     }
-
 
 }

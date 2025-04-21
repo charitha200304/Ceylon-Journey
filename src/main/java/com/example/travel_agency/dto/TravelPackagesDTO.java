@@ -1,19 +1,16 @@
 package com.example.travel_agency.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 
 public class TravelPackagesDTO {
     private Long id;
     private String name;
     private String description;
     private double budget;
+
     private int duration;
     private String includedServices;
 
-    public TravelPackagesDTO(Long id, String name, String description, double budget, int duration, String includedServices) {
+    public TravelPackagesDTO(Long id, String name, String description,  double budget, int duration, String includedServices) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -35,6 +32,8 @@ public class TravelPackagesDTO {
     public String getName() {
         return name;
     }
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -83,4 +82,6 @@ public class TravelPackagesDTO {
                 ", includedServices='" + includedServices + '\'' +
                 '}';
     }
+
+
 }

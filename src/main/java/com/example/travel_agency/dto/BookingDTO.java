@@ -1,7 +1,5 @@
 package com.example.travel_agency.dto;
 
-import lombok.*;
-
 import java.time.LocalDate;
 
 public class BookingDTO {

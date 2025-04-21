@@ -1,7 +1,5 @@
 package com.example.travel_agency.controller;
 
-import com.example.travel_agency.dto.DestinationDTO;
-import com.example.travel_agency.service.DestinationService;
 import com.example.travel_agency.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

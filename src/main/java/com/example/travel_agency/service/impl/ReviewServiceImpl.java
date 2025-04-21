@@ -5,7 +5,6 @@ import com.example.travel_agency.entity.Review;
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.ReviewRepo;
 import com.example.travel_agency.repository.UsersRepo;
-import com.example.travel_agency.service.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

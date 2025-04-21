@@ -7,7 +7,6 @@ import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.BookingRepo;
 import com.example.travel_agency.repository.HotelRepo;
 import com.example.travel_agency.repository.UsersRepo;
-import com.example.travel_agency.service.BookingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

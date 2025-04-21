@@ -5,11 +5,10 @@ import com.example.travel_agency.dto.UserDTO;
 import com.example.travel_agency.dto.UserLoginDTO;
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.UsersRepo;
-import com.example.travel_agency.service.JWTService;
-import com.example.travel_agency.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -125,42 +124,32 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public AuthTokenDTO verifyUser(UserLoginDTO userDTO) {
-        Optional<User> optionalUser = userRepo.findByUsername(userDTO.getUsername());
-
         AuthTokenDTO authTokenDTO = new AuthTokenDTO();
 
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
+            );
+
+            if (authentication.isAuthenticated()) {
+                User user = (User) authentication.getPrincipal(); // Get authenticated user details
+                authTokenDTO.setAuthenticated(true);
+                authTokenDTO.setToken(jwtService.generateToken(user.getUsername()));
+                authTokenDTO.setMessage("Success");
+                return authTokenDTO;
+            } else {
                 authTokenDTO.setAuthenticated(false);
-                authTokenDTO.setMessage("Invalid credentials");
+                authTokenDTO.setMessage("Authentication failed"); // Generic authentication failure message
                 return authTokenDTO;
             }
-            try {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
-                );
-
-                if (authentication.isAuthenticated()) {
-                    authTokenDTO.setAuthenticated(true);
-                    authTokenDTO.setToken(jwtService.generateToken(user.getUsername()));
-                    authTokenDTO.setMessage("Success");
-                    return authTokenDTO;
-                }
-            } catch (UsernameNotFoundException e) {
-                authTokenDTO.setAuthenticated(false);
-                authTokenDTO.setMessage("User not found");
-                return authTokenDTO;
-            }
-
-
+        } catch (UsernameNotFoundException e) {
+            authTokenDTO.setAuthenticated(false);
+            authTokenDTO.setMessage("User not found");
+            return authTokenDTO;
+        } catch (BadCredentialsException e) {
             authTokenDTO.setAuthenticated(false);
             authTokenDTO.setMessage("Invalid credentials");
             return authTokenDTO;
         }
-
-        authTokenDTO.setAuthenticated(false);
-        authTokenDTO.setMessage("User not found");
-        return authTokenDTO;
     }
 }

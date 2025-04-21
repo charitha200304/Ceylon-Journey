@@ -2,9 +2,6 @@ package com.example.travel_agency.entity;
 
 import com.example.travel_agency.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 

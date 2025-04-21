@@ -14,6 +14,7 @@ public class TravelPackages {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+
     private double budget;
     private int duration;
 
@@ -31,6 +32,8 @@ public class TravelPackages {
         this.duration = duration;
         this.includedServices = includedServices;
     }
+
+
 
     public Long getId() {
         return id;
@@ -91,4 +94,5 @@ public class TravelPackages {
                 ", includedServices='" + includedServices + '\'' +
                 '}';
     }
+
 }

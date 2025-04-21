@@ -3,10 +3,6 @@ package com.example.travel_agency.entity;
 
 import com.example.travel_agency.enums.Category;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "destinations")
