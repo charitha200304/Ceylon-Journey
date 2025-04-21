@@ -281,128 +281,51 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        // Toggle password visibility
-        $('.toggle-password').click(function () {
-            const input = $(this).prev('input');
-            if (input.attr('type') === 'password') {
-                input.attr('type', 'text');
-                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
-            } else {
-                input.attr('type', 'password');
-                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
-            }
-        });
-
-        // Function to get CSRF token from cookie
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    let cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.startsWith(name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-        // Form submission
-        $('#registrationForm').submit(function (e) {
+    $(document).ready(function() {
+        $('#registrationForm').submit(function(e) {
             e.preventDefault();
 
-            // Clear previous error messages
-            $('.error-message').hide().text('');
-
-            // Collect input values
             const formData = {
                 username: $('#username').val().trim(),
                 email: $('#email').val().trim(),
                 password: $('#password').val().trim(),
-                role: $('#role').val().trim() // Get the selected role value
+                role: $('#role').val().trim()
             };
 
-            const termsChecked = $('#terms').is(':checked');
-            let isValid = true;
-
-            // Validation logic
-            if (!formData.username) {
-                $('#usernameError').text('Username is required').show();
-                isValid = false;
-            }
-
-            if (!formData.email) {
-                $('#emailError').text('Email is required').show();
-                isValid = false;
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-                $('#emailError').text('Please enter a valid email').show();
-                isValid = false;
-            }
-
-            if (!formData.password) {
-                $('#passwordError').text('Password is required').show();
-                isValid = false;
-            } else if (formData.password.length < 8) {
-                $('#passwordError').text('Password must be at least 8 characters').show();
-                isValid = false;
-            }
-
-            if (!formData.role) {
-                $('#roleError').text('Role is required').show();
-                isValid = false;
-            }
-
-            if (!termsChecked) {
-                $('#termsError').text('You must accept the terms').show();
-                isValid = false;
-            }
-
-            if (!isValid) return;
-
-            // Disable button and show loading spinner
             const btn = $('#submitBtn');
             btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Registering...');
 
-            // ✅ FIX: Make sure the request goes to the correct backend (Spring Boot server on port 8080)
             $.ajax({
-                url: 'http://localhost:8080/api/user/addUser', // ✅ Use actual backend port
+                url: 'http://localhost:8080/api/user/addUser', // ✅ fixed endpoint
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
-                // ✅ Include the CSRF token in the headers
-                headers: {
-                    'X-CSRF-TOKEN': getCookie('XSRF-TOKEN') // Or 'CSRF-TOKEN', depending on your server config
-                },
-                success: function (response) {
-                    alert('✅ Registration successful!');
+                dataType: 'json',
+                success: function(response) {
+                    alert(response.message || 'Registration successful!');
                     $('#registrationForm')[0].reset();
-                    // Re-enable the button and reset the text
                     btn.prop('disabled', false).html('Create Account');
+
+                    // Navigate to user login page
+                    window.location.href = 'login-selector-simple.html'; // Automatically navigate to user login page
                 },
-                error: function (xhr, status, error) {
-                    let errorMsg = 'Registration failed. Please try again.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMsg = xhr.responseJSON.message;
-                    } else if (status === 'timeout') {
-                        errorMsg = 'Request timed out. Please check your network connection.';
+                error: function(xhr) {
+                    let errorMsg = "Registration failed. Please try again.";
+                    if (xhr.status === 403) {
+                        errorMsg = "Access forbidden. The server rejected your request.";
                     } else if (xhr.status === 400) {
-                        errorMsg = 'Invalid input. Please check the form data.';
+                        errorMsg = "Bad request: " + (xhr.responseJSON?.message || "Invalid data");
+                    } else if (xhr.status === 0) {
+                        errorMsg = "Cannot connect to server. Please check your network connection.";
                     }
-                    alert('❌ ' + errorMsg);
-                    console.error("Error response:", xhr);
-                    // Re-enable the button and reset the text
+                    alert(errorMsg);
                     btn.prop('disabled', false).html('Create Account');
-                },
-                complete: function () {
-                    // btn.prop('disabled', false).html('Create Account'); //removed this line to avoid duplication
                 }
             });
         });
     });
+
+
 
 </script>
 </body>

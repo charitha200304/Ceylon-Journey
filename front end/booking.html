@@ -4,18 +4,1049 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Your Trip - Ceylon Journeys</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/booking.css">
-  <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- All CSS styles included directly in the HTML file -->
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary-color: #00c2a8;
+      --primary-dark: #0a6e6e;
+      --primary-light: #e6f8f6;
+      --secondary-color: #ff9800;
+      --text-color: #333333;
+      --text-light: #666666;
+      --background-color: #ffffff;
+      --background-light: #f5f5f5;
+      --border-color: #dddddd;
+      --success-color: #4caf50;
+      --warning-color: #ff9800;
+      --danger-color: #f44336;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+      --border-radius: 5px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-light);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-size: 16px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--background-light);
+    }
+
+    .btn.active {
+      background-color: var(--primary-dark);
+    }
+
+    /* Header Styles */
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text-1 {
+      color: var(--primary-dark);
+    }
+
+    .logo-text-2 {
+      color: var(--primary-color);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      margin-right: 20px;
+    }
+
+    .nav-links li {
+      margin: 0 15px;
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      font-weight: 500;
+      transition: var(--transition);
+      padding-bottom: 5px;
+      position: relative;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .auth-buttons .btn-secondary {
+      border: 1px solid #eee;
+    }
+
+    .auth-buttons .btn-primary {
+      padding: 10px 20px;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    .bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px auto;
+      background-color: var(--text-color);
+      transition: var(--transition);
+    }
+
+    /* Page Banner */
+    .page-banner {
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+
+    .page-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .banner-content h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .banner-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* Booking Section Styles */
+    .booking-section {
+      padding: 80px 0;
+    }
+
+    .booking-container {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 30px;
+    }
+
+    /* Booking Progress */
+    .booking-progress {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--background-light);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-light);
+      font-size: 18px;
+    }
+
+    .step-label {
+      font-size: 16px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .progress-line {
+      flex: 1;
+      height: 2px;
+      background-color: var(--border-color);
+      margin: 0 15px;
+      margin-bottom: 20px;
+    }
+
+    .progress-step.active .step-number {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .progress-step.active .step-label {
+      color: var(--primary-color);
+    }
+
+    .progress-step.completed .step-number {
+      background-color: var(--success-color);
+      border-color: var(--success-color);
+      color: white;
+    }
+
+    /* Booking Forms */
+    .booking-forms {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .booking-form {
+      display: none;
+      padding: 40px;
+    }
+
+    .booking-form.active {
+      display: block;
+    }
+
+    .booking-form h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .booking-form p {
+      color: var(--text-light);
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      color: var(--text-color);
+      font-size: 16px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      font-size: 15px;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px var(--primary-light);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Number Input */
+    .number-input {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .number-input button {
+      width: 45px;
+      height: 45px;
+      background-color: var(--background-light);
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .number-input button:hover {
+      background-color: var(--border-color);
+    }
+
+    .number-input input {
+      width: 70px;
+      height: 45px;
+      border: none;
+      text-align: center;
+      font-size: 16px;
+      -moz-appearance: textfield;
+    }
+
+    .number-input input::-webkit-outer-spin-button,
+    .number-input input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Form Buttons */
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+
+    .form-buttons button,
+    .form-buttons a {
+      padding: 14px 25px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .form-buttons button:only-child {
+      margin-left: auto;
+    }
+
+    /* Radio and Checkbox Groups */
+    .radio-group, .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+    }
+
+    .checkbox-group a {
+      color: var(--primary-color);
+    }
+
+    .checkbox-group a:hover {
+      text-decoration: underline;
+    }
+
+    /* Booking Summary */
+    .booking-summary {
+      background-color: var(--primary-light);
+      padding: 25px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+    }
+
+    .booking-summary h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+
+    .summary-item span:first-child {
+      color: var(--text-light);
+    }
+
+    .summary-divider {
+      height: 1px;
+      background-color: var(--border-color);
+      margin: 20px 0;
+    }
+
+    .summary-item.total {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-color);
+    }
+
+    .summary-note {
+      margin-top: 15px;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* Payment Options */
+    .payment-options {
+      margin-bottom: 30px;
+    }
+
+    .payment-options h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .payment-method {
+      flex: 1;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .payment-method input {
+      display: none;
+    }
+
+    .payment-method label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .payment-method i {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--text-light);
+    }
+
+    .payment-method.active {
+      border-color: var(--primary-color);
+    }
+
+    .payment-method.active label {
+      background-color: var(--primary-light);
+    }
+
+    .payment-method.active i {
+      color: var(--primary-color);
+    }
+
+    /* Credit Card Form */
+    .credit-card-form {
+      margin-bottom: 30px;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .card-icons {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 5px;
+    }
+
+    .card-icons i {
+      font-size: 20px;
+      color: var(--text-light);
+    }
+
+    .cvv-info {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    /* Confirmation Message */
+    .confirmation-message {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .confirmation-icon {
+      font-size: 70px;
+      color: var(--success-color);
+      margin-bottom: 25px;
+    }
+
+    .confirmation-message h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .confirmation-message p {
+      color: var(--text-light);
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16px;
+    }
+
+    .booking-details {
+      background-color: var(--primary-light);
+      padding: 25px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .booking-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+
+    .booking-detail span:first-child {
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .next-steps {
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .next-steps h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .next-steps ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    .next-steps li {
+      margin-bottom: 10px;
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    /* Booking Sidebar */
+    .booking-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .need-help, .booking-faq, .secure-booking {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+    }
+
+    .need-help h3, .booking-faq h3, .secure-booking h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .need-help p, .secure-booking p {
+      color: var(--text-light);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .help-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .help-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 10px;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-light);
+      transition: var(--transition);
+    }
+
+    .help-option:hover {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+
+    .help-option i {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+    }
+
+    .help-option span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* FAQ Items */
+    .faq-item {
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 15px;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      cursor: pointer;
+    }
+
+    .faq-question h4 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .faq-question i {
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 0 15px;
+    }
+
+    .faq-answer p {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* Secure Booking */
+    .security-badges {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .security-badges img {
+      height: 40px;
+    }
+
+    .security-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+
+    .security-text i {
+      color: var(--success-color);
+    }
+
+    .payment-badges {
+      display: flex;
+      justify-content: space-between;
+      font-size: 24px;
+      color: var(--text-light);
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo a {
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+
+    .footer-logo span:first-child {
+      color: var(--primary-dark);
+    }
+
+    .footer-logo span:last-child {
+      color: var(--primary-color);
+    }
+
+    .footer-column p {
+      color: #ccc;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color);
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .contact-info li {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .contact-info i {
+      color: var(--primary-color);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a {
+      color: #ccc;
+      transition: var(--transition);
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Dark Mode Styles */
+    .dark-mode {
+      --text-color: #f5f5f5;
+      --text-light: #aaaaaa;
+      --background-color: #121212;
+      --background-light: #1e1e1e;
+      --border-color: #333333;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .dark-mode header,
+    .dark-mode .booking-forms,
+    .dark-mode .need-help,
+    .dark-mode .booking-faq,
+    .dark-mode .secure-booking {
+      background-color: var(--background-color);
+    }
+
+    .dark-mode .booking-summary,
+    .dark-mode .booking-details,
+    .dark-mode .help-option {
+      background-color: var(--background-light);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .booking-container {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-sidebar {
+        order: -1;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: var(--transition);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+        z-index: 99;
+      }
+
+      .nav-menu.active {
+        display: flex;
+        left: 0;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .nav-links li {
+        margin: 15px 0;
+      }
+
+      .nav-links a.active::after {
+        display: none;
+      }
+
+      .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-methods {
+        flex-direction: column;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .booking-progress {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .progress-line {
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      .progress-step {
+        margin-bottom: 10px;
+      }
+
+      .help-options {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-form {
+        padding: 25px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <header>
+<!-- Header Section -->
+<header>
+  <div class="container">
     <div class="logo">
-      <a href="index.html">Ceylon<span>Journeys</span></a>
+      <a href="index.html">
+        <span class="logo-text-1">Ceylon</span><span class="logo-text-2">Journeys</span>
+      </a>
     </div>
-    <nav>
+    <div class="nav-menu">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="destinations.html">Destinations</a></li>
@@ -25,560 +1056,566 @@
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-    </nav>
-    <!-- <div class="theme-toggle" aria-label="Toggle dark mode">
-      <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
-      <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
-    </div> -->
-    <div class="auth-buttons">
-      <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
-      <a href="booking.html" class="btn btn-primary active">Book Now</a>
+      <div class="auth-buttons">
+        <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+        <a href="booking.html" class="btn btn-primary">Book Now</a>
+      </div>
     </div>
     <div class="hamburger">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- Page Banner -->
-  <section class="page-banner" style="background-image: url('images/booking1.avif');">
-    <div class="banner-content">
-      <h1>Book Your Trip</h1>
-      <p>Plan your perfect Sri Lankan adventure with us</p>
-    </div>
-  </section>
+<!-- Page Banner -->
+<section class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1501179691627-eeaa65ea017c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+  <div class="banner-content">
+    <h1>Book Your Trip</h1>
+    <p>Plan your perfect Sri Lankan adventure with us</p>
+  </div>
+</section>
 
-  <!-- Booking Section -->
-  <section class="booking-section">
-    <div class="container">
-      <div class="booking-container">
-        <!-- Booking Progress -->
-        <div class="booking-progress">
-          <div class="progress-step active" data-step="1">
-            <div class="step-number">1</div>
-            <div class="step-label">Trip Details</div>
-          </div>
-          <div class="progress-line"></div>
-          <div class="progress-step" data-step="2">
-            <div class="step-number">2</div>
-            <div class="step-label">Personal Info</div>
-          </div>
-          <div class="progress-line"></div>
-          <div class="progress-step" data-step="3">
-            <div class="step-number">3</div>
-            <div class="step-label">Payment</div>
-          </div>
-          <div class="progress-line"></div>
-          <div class="progress-step" data-step="4">
-            <div class="step-number">4</div>
-            <div class="step-label">Confirmation</div>
-          </div>
+<!-- Booking Section -->
+<section class="booking-section">
+  <div class="container">
+    <div class="booking-container">
+      <!-- Booking Progress -->
+      <div class="booking-progress">
+        <div class="progress-step active" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-label">Booking Details</div>
         </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-label">Payment</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-label">Confirmation</div>
+        </div>
+      </div>
 
-        <!-- Booking Forms -->
-        <div class="booking-forms">
-          <!-- Step 1: Trip Details -->
-          <div class="booking-form active" id="step-1">
-            <h2>Trip Details</h2>
-            <p>Select your preferred package and travel dates</p>
-            
-            <form>
-              <div class="form-group">
-                <label for="package-type">Package Type</label>
-                <select id="package-type" required>
-                  <option value="">Select a package</option>
-                  <option value="cultural">Cultural Heritage Tour (7 Days)</option>
-                  <option value="beach">Tropical Beach Getaway (5 Days)</option>
-                  <option value="adventure">Adventure & Wildlife Safari (8 Days)</option>
-                  <option value="family">Family Fun Package (6 Days)</option>
-                  <option value="honeymoon">Romantic Honeymoon Escape (7 Days)</option>
-                  <option value="education">Educational Discovery Tour (10 Days)</option>
-                  <option value="custom">Custom Package</option>
-                </select>
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="start-date">Start Date</label>
-                  <input type="date" id="start-date" required>
-                </div>
-                <div class="form-group">
-                  <label for="end-date">End Date</label>
-                  <input type="date" id="end-date" required>
-                </div>
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="adults">Adults</label>
-                  <div class="number-input">
-                    <button type="button" class="minus">-</button>
-                    <input type="number" id="adults" value="2" min="1" max="10">
-                    <button type="button" class="plus">+</button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="children">Children (2-12 years)</label>
-                  <div class="number-input">
-                    <button type="button" class="minus">-</button>
-                    <input type="number" id="children" value="0" min="0" max="10">
-                    <button type="button" class="plus">+</button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="accommodation">Accommodation Preference</label>
-                <select id="accommodation" required>
-                  <option value="">Select accommodation type</option>
-                  <option value="budget">Budget (3-star hotels)</option>
-                  <option value="standard">Standard (4-star hotels)</option>
-                  <option value="luxury">Luxury (5-star hotels)</option>
-                  <option value="mixed">Mixed (combination)</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label for="special-requests">Special Requests</label>
-                <textarea id="special-requests" rows="4" placeholder="Any dietary requirements, accessibility needs, or special occasions?"></textarea>
-              </div>
-              
-              <div class="form-buttons">
-                <button type="button" class="btn btn-primary next-step" data-next="2">Continue to Personal Info</button>
-              </div>
-            </form>
-          </div>
-          
-          <!-- Step 2: Personal Information -->
-          <div class="booking-form" id="step-2">
-            <h2>Personal Information</h2>
-            <p>Please provide your contact and traveler details</p>
-            
-            <form>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="first-name">First Name</label>
-                  <input type="text" id="first-name" required>
-                </div>
-                <div class="form-group">
-                  <label for="last-name">Last Name</label>
-                  <input type="text" id="last-name" required>
-                </div>
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="email">Email Address</label>
-                  <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                  <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" required>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="nationality">Nationality</label>
-                <select id="nationality" required>
-                  <option value="">Select your nationality</option>
-                  <option value="us">United States</option>
-                  <option value="uk">United Kingdom</option>
-                  <option value="ca">Canada</option>
-                  <option value="au">Australia</option>
-                  <option value="in">India</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label>Do you require visa assistance?</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input type="radio" id="visa-yes" name="visa" value="yes">
-                    <label for="visa-yes">Yes</label>
-                  </div>
-                  <div class="radio-option">
-                    <input type="radio" id="visa-no" name="visa" value="no" checked>
-                    <label for="visa-no">No</label>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label>Would you like to add travel insurance?</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input type="radio" id="insurance-yes" name="insurance" value="yes">
-                    <label for="insurance-yes">Yes (recommended)</label>
-                  </div>
-                  <div class="radio-option">
-                    <input type="radio" id="insurance-no" name="insurance" value="no" checked>
-                    <label for="insurance-no">No</label>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="emergency-contact">Emergency Contact</label>
-                <input type="text" id="emergency-contact" placeholder="Name and phone number" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="passport-number">Passport Number</label>
-                <input type="text" id="passport-number" required>
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="passport-issue">Passport Issue Date</label>
-                  <input type="date" id="passport-issue" required>
-                </div>
-                <div class="form-group">
-                  <label for="passport-expiry">Passport Expiry Date</label>
-                  <input type="date" id="passport-expiry" required>
-                </div>
-              </div>
-              
-              <div class="form-buttons">
-                <button type="button" class="btn btn-secondary prev-step" data-prev="1">Back</button>
-                <button type="button" class="btn btn-primary next-step" data-next="3">Continue to Payment</button>
-              </div>
-            </form>
-          </div>
-          
-          <!-- Step 3: Payment -->
-          <div class="booking-form" id="step-3">
-            <h2>Payment Information</h2>
-            <p>Secure payment to confirm your booking</p>
-            
-            <div class="booking-summary">
-              <h3>Booking Summary</h3>
-              <div class="summary-item">
-                <span>Package:</span>
-                <span id="summary-package">Cultural Heritage Tour (7 Days)</span>
-              </div>
-              <div class="summary-item">
-                <span>Dates:</span>
-                <span id="summary-dates">May 15, 2025 - May 21, 2025</span>
-              </div>
-              <div class="summary-item">
-                <span>Travelers:</span>
-                <span id="summary-travelers">2 Adults, 0 Children</span>
-              </div>
-              <div class="summary-item">
-                <span>Accommodation:</span>
-                <span id="summary-accommodation">Standard (4-star hotels)</span>
-              </div>
-              <div class="summary-divider"></div>
-              <div class="summary-item">
-                <span>Package Price:</span>
-                <span id="summary-package-price">$1,798.00</span>
-              </div>
-              <div class="summary-item">
-                <span>Insurance (optional):</span>
-                <span id="summary-insurance">$0.00</span>
-              </div>
-              <div class="summary-item">
-                <span>Visa Assistance:</span>
-                <span id="summary-visa">$0.00</span>
-              </div>
-              <div class="summary-item total">
-                <span>Total:</span>
-                <span id="summary-total">$1,798.00</span>
-              </div>
-              <div class="summary-note">
-                <p>* A 20% deposit ($359.60) is required to secure your booking. The remaining balance is due 30 days before your trip.</p>
+      <!-- Booking Forms -->
+      <div class="booking-forms">
+        <!-- Step 1: Booking Details -->
+        <div class="booking-form active" id="step-1">
+          <h2>Booking Details</h2>
+          <p>Please provide your trip details and contact information</p>
+
+          <form>
+            <div class="form-group">
+              <label for="package-type">Chosen Package</label>
+              <select id="package-type" required>
+                <option value="">Select a package</option>
+                <option value="cultural">Cultural Heritage Tour (7 Days)</option>
+                <option value="beach">Tropical Beach Getaway (5 Days)</option>
+                <option value="adventure">Adventure & Wildlife Safari (8 Days)</option>
+                <option value="family">Family Fun Package (6 Days)</option>
+                <option value="honeymoon">Romantic Honeymoon Escape (7 Days)</option>
+                <option value="education">Educational Discovery Tour (10 Days)</option>
+                <option value="custom">Custom Package</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="travel-date">Date</label>
+              <input type="date" id="travel-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <div class="number-input">
+                <button type="button" class="minus">-</button>
+                <input type="number" id="guests" value="2" min="1" max="20">
+                <button type="button" class="plus">+</button>
               </div>
             </div>
-            
-            <form>
-              <div class="payment-options">
-                <h3>Payment Method</h3>
-                <div class="payment-methods">
-                  <div class="payment-method active">
-                    <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
-                    <label for="credit-card">
-                      <i class="far fa-credit-card"></i>
-                      Credit Card
-                    </label>
-                  </div>
-                  <div class="payment-method">
-                    <input type="radio" id="paypal" name="payment-method" value="paypal">
-                    <label for="paypal">
-                      <i class="fab fa-paypal"></i>
-                      PayPal
-                    </label>
-                  </div>
-                  <div class="payment-method">
-                    <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer">
-                    <label for="bank-transfer">
-                      <i class="fas fa-university"></i>
-                      Bank Transfer
-                    </label>
+
+            <div class="form-group">
+              <label for="full-name">Full Name</label>
+              <input type="text" id="full-name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" required>
+            </div>
+
+            <div class="form-buttons">
+              <button type="button" class="btn btn-primary next-step" data-next="2">Continue to Payment</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div class="booking-form" id="step-2">
+          <h2>Payment Information</h2>
+          <p>Secure payment to confirm your booking</p>
+
+          <div class="booking-summary">
+            <h3>Booking Summary</h3>
+            <div class="summary-item">
+              <span>Package:</span>
+              <span id="summary-package">Cultural Heritage Tour (7 Days)</span>
+            </div>
+            <div class="summary-item">
+              <span>Date:</span>
+              <span id="summary-date">May 15, 2025</span>
+            </div>
+            <div class="summary-item">
+              <span>Guests:</span>
+              <span id="summary-guests">2</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+              <span>Package Price:</span>
+              <span id="summary-package-price">$1,798.00</span>
+            </div>
+            <div class="summary-item total">
+              <span>Total:</span>
+              <span id="summary-total">$1,798.00</span>
+            </div>
+            <div class="summary-note">
+              <p>* A 20% deposit ($359.60) is required to secure your booking. The remaining balance is due 30 days before your trip.</p>
+            </div>
+          </div>
+
+          <form>
+            <div class="payment-options">
+              <h3>Payment Method</h3>
+              <div class="payment-methods">
+                <div class="payment-method active">
+                  <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
+                  <label for="credit-card">
+                    <i class="far fa-credit-card"></i>
+                    Credit Card
+                  </label>
+                </div>
+                <div class="payment-method">
+                  <input type="radio" id="paypal" name="payment-method" value="paypal">
+                  <label for="paypal">
+                    <i class="fab fa-paypal"></i>
+                    PayPal
+                  </label>
+                </div>
+                <div class="payment-method">
+                  <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer">
+                  <label for="bank-transfer">
+                    <i class="fas fa-university"></i>
+                    Bank Transfer
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="credit-card-form">
+              <div class="form-group">
+                <label for="card-name">Name on Card</label>
+                <input type="text" id="card-name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <div class="input-with-icon">
+                  <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                  <div class="card-icons">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
                   </div>
                 </div>
               </div>
-              
-              <div class="credit-card-form">
+
+              <div class="form-row">
                 <div class="form-group">
-                  <label for="card-name">Name on Card</label>
-                  <input type="text" id="card-name" required>
+                  <label for="expiry-date">Expiry Date</label>
+                  <input type="text" id="expiry-date" placeholder="MM/YY" required>
                 </div>
-                
                 <div class="form-group">
-                  <label for="card-number">Card Number</label>
+                  <label for="cvv">CVV</label>
                   <div class="input-with-icon">
-                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
-                    <div class="card-icons">
-                      <i class="fab fa-cc-visa"></i>
-                      <i class="fab fa-cc-mastercard"></i>
-                      <i class="fab fa-cc-amex"></i>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="expiry-date">Expiry Date</label>
-                    <input type="text" id="expiry-date" placeholder="MM/YY" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <div class="input-with-icon">
-                      <input type="text" id="cvv" placeholder="123" required>
-                      <i class="fas fa-question-circle cvv-info"></i>
-                    </div>
+                    <input type="text" id="cvv" placeholder="123" required>
+                    <i class="fas fa-question-circle cvv-info"></i>
                   </div>
                 </div>
               </div>
-              
-              <div class="payment-options">
-                <h3>Payment Type</h3>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input type="radio" id="payment-full" name="payment-type" value="full">
-                    <label for="payment-full">Pay in Full ($1,798.00)</label>
-                  </div>
-                  <div class="radio-option">
-                    <input type="radio" id="payment-deposit" name="payment-type" value="deposit" checked>
-                    <label for="payment-deposit">Pay Deposit Only ($359.60)</label>
-                  </div>
+            </div>
+
+            <div class="payment-options">
+              <h3>Payment Type</h3>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="payment-full" name="payment-type" value="full">
+                  <label for="payment-full">Pay in Full ($1,798.00)</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="payment-deposit" name="payment-type" value="deposit" checked>
+                  <label for="payment-deposit">Pay Deposit Only ($359.60)</label>
                 </div>
               </div>
-              
-              <div class="form-group">
-                <div class="checkbox-group">
-                  <input type="checkbox" id="terms-payment" required>
-                  <label for="terms-payment">I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
-                </div>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="terms-payment" required>
+                <label for="terms-payment">I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
               </div>
-              
-              <div class="form-buttons">
-                <button type="button" class="btn btn-secondary prev-step" data-prev="2">Back</button>
-                <button type="button" class="btn btn-primary next-step" data-next="4">Confirm Booking</button>
+            </div>
+
+            <div class="form-buttons">
+              <button type="button" class="btn btn-secondary prev-step" data-prev="1">Back</button>
+              <button type="button" class="btn btn-primary next-step" data-next="3">Confirm Booking</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="booking-form" id="step-3">
+          <div class="confirmation-message">
+            <div class="confirmation-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Booking Confirmed!</h2>
+            <p>Thank you for booking with Ceylon Journeys. Your trip has been successfully confirmed.</p>
+
+            <div class="booking-details">
+              <div class="booking-detail">
+                <span>Booking Reference:</span>
+                <span>CJ-25789</span>
               </div>
-            </form>
-          </div>
-          
-          <!-- Step 4: Confirmation -->
-          <div class="booking-form" id="step-4">
-            <div class="confirmation-message">
-              <div class="confirmation-icon">
-                <i class="fas fa-check-circle"></i>
+              <div class="booking-detail">
+                <span>Confirmation Email:</span>
+                <span>Sent to your email address</span>
               </div>
-              <h2>Booking Confirmed!</h2>
-              <p>Thank you for booking with Ceylon Journeys. Your trip has been successfully confirmed.</p>
-              
-              <div class="booking-details">
-                <div class="booking-detail">
-                  <span>Booking Reference:</span>
-                  <span>CJ-25789</span>
-                </div>
-                <div class="booking-detail">
-                  <span>Confirmation Email:</span>
-                  <span>Sent to your email address</span>
-                </div>
-                <div class="booking-detail">
-                  <span>Payment Status:</span>
-                  <span>Deposit Paid</span>
-                </div>
-                <div class="booking-detail">
-                  <span>Balance Due:</span>
-                  <span>$1,438.40 (Due by April 15, 2025)</span>
-                </div>
+              <div class="booking-detail">
+                <span>Payment Status:</span>
+                <span>Deposit Paid</span>
               </div>
-              
-              <div class="next-steps">
-                <h3>Next Steps</h3>
-                <ul>
-                  <li>Check your email for a detailed confirmation</li>
-                  <li>Our travel consultant will contact you within 24 hours</li>
-                  <li>Prepare your travel documents</li>
-                  <li>Get ready for an amazing Sri Lankan adventure!</li>
-                </ul>
+              <div class="booking-detail">
+                <span>Balance Due:</span>
+                <span>$1,438.40 (Due by April 15, 2025)</span>
               </div>
-              
-              <div class="form-buttons">
-                <a href="index.html" class="btn btn-secondary">Return to Home</a>
-                <a href="my-bookings.html" class="btn btn-primary">View My Bookings</a>
-              </div>
+            </div>
+
+            <div class="next-steps">
+              <h3>Next Steps</h3>
+              <ul>
+                <li>Check your email for a detailed confirmation</li>
+                <li>Our travel consultant will contact you within 24 hours</li>
+                <li>Prepare your travel documents</li>
+                <li>Get ready for an amazing Sri Lankan adventure!</li>
+              </ul>
+            </div>
+
+            <div class="form-buttons">
+              <a href="index.html" class="btn btn-secondary">Return to Home</a>
+              <a href="my-bookings.html" class="btn btn-primary">View My Bookings</a>
             </div>
           </div>
         </div>
-        
-        <!-- Booking Sidebar -->
-        <div class="booking-sidebar">
-          <div class="need-help">
-            <h3>Need Help?</h3>
-            <p>Our travel experts are here to assist you with your booking.</p>
-            <div class="help-options">
-              <a href="tel:+94112345678" class="help-option">
-                <i class="fas fa-phone-alt"></i>
-                <span>Call Us</span>
-              </a>
-              <a href="mailto:bookings@ceylonjourney.com" class="help-option">
-                <i class="fas fa-envelope"></i>
-                <span>Email Us</span>
-              </a>
-              <a href="#" class="help-option" id="open-chat">
-                <i class="fas fa-comment-dots"></i>
-                <span>Live Chat</span>
-              </a>
+      </div>
+
+      <!-- Booking Sidebar -->
+      <div class="booking-sidebar">
+        <div class="need-help">
+          <h3>Need Help?</h3>
+          <p>Our travel experts are here to assist you with your booking.</p>
+          <div class="help-options">
+            <a href="tel:+94112345678" class="help-option">
+              <i class="fas fa-phone-alt"></i>
+              <span>Call Us</span>
+            </a>
+            <a href="mailto:bookings@ceylonjourney.com" class="help-option">
+              <i class="fas fa-envelope"></i>
+              <span>Email Us</span>
+            </a>
+            <a href="#" class="help-option" id="open-chat">
+              <i class="fas fa-comment-dots"></i>
+              <span>Live Chat</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="booking-faq">
+          <h3>Frequently Asked Questions</h3>
+          <div class="faq-item">
+            <div class="faq-question">
+              <h4>What is the cancellation policy?</h4>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Free cancellation up to 30 days before the trip. Cancellations made 15-29 days before receive a 50% refund. No refunds for cancellations made less than 15 days before the trip.</p>
             </div>
           </div>
-          
-          <div class="booking-faq">
-            <h3>Frequently Asked Questions</h3>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What is the cancellation policy?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>Free cancellation up to 30 days before the trip. Cancellations made 15-29 days before receive a 50% refund. No refunds for cancellations made less than 15 days before the trip.</p>
-              </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <h4>How much deposit is required?</h4>
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How much deposit is required?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>A 20% deposit is required to secure your booking. The remaining balance is due 30 days before your trip start date.</p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Can I customize my itinerary?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>Yes, we offer customization options for all our packages. Please mention your preferences in the Special Requests field or contact our travel consultants directly.</p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What documents do I need?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>You'll need a valid passport with at least 6 months validity beyond your travel dates, and an Electronic Travel Authorization (ETA) or visa for Sri Lanka. We can assist with the visa application process if needed.</p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Is travel insurance mandatory?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>While not mandatory, we strongly recommend purchasing travel insurance to protect your trip investment against unforeseen circumstances. We offer comprehensive travel insurance packages that cover trip cancellation, medical emergencies, and more.</p>
-              </div>
+            <div class="faq-answer">
+              <p>A 20% deposit is required to secure your booking. The remaining balance is due 30 days before your trip start date.</p>
             </div>
           </div>
-          
-          <div class="secure-booking">
-            <h3>Secure Booking</h3>
-            <p>Your payment information is protected by industry-standard encryption.</p>
-            <div class="security-badges">
-              <img src="images/secure-payment.png" alt="Secure Payment">
-              <div class="security-text">
-                <i class="fas fa-lock"></i>
-                <span>SSL Encrypted</span>
-              </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <h4>Can I customize my itinerary?</h4>
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="payment-badges">
-              <i class="fab fa-cc-visa"></i>
-              <i class="fab fa-cc-mastercard"></i>
-              <i class="fab fa-cc-amex"></i>
-              <i class="fab fa-cc-discover"></i>
-              <i class="fab fa-paypal"></i>
+            <div class="faq-answer">
+              <p>Yes, we offer customization options for all our packages. Please mention your preferences in the Special Requests field or contact our travel consultants directly.</p>
             </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <h4>What documents do I need?</h4>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>You'll need a valid passport with at least 6 months validity beyond your travel dates, and an Electronic Travel Authorization (ETA) or visa for Sri Lanka. We can assist with the visa application process if needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="secure-booking">
+          <h3>Secure Booking</h3>
+          <p>Your payment information is protected by industry-standard encryption.</p>
+          <div class="security-badges">
+            <img src="images/secure-payment_17752064.png" alt="Secure Payment">
+            <div class="security-text">
+              <i class="fas fa-lock"></i>
+              <span>SSL Encrypted</span>
+            </div>
+          </div>
+          <div class="payment-badges">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+            <i class="fab fa-cc-discover"></i>
+            <i class="fab fa-paypal"></i>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-column">
-          <div class="footer-logo">
-            <a href="index.html">Ceylon<span>Journeys</span></a>
-          </div>
-          <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <div class="footer-logo">
+          <a href="index.html"><span>Ceylon</span><span>Journeys</span></a>
         </div>
-        <div class="footer-column">
-          <h3>Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="destinations.html">Destinations</a></li>
-            <li><a href="packages.html">Packages</a></li>
-            <li><a href="guide.html">Guide</a></li>
-            <li><a href="reviews.html">Reviews</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Services</h3>
-          <ul class="footer-links">
-            <li><a href="hotels.html">Hotel Booking</a></li>
-            <li><a href="guides.html">Tour Guides</a></li>
-            <li><a href="vehicles.html">Vehicle Rental</a></li>
-            <li><a href="education.html">Education Tours</a></li>
-            <li><a href="custom.html">Custom Packages</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Contact Us</h3>
-          <ul class="contact-info">
-            <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
-            <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
-            <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
-            <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
-          </ul>
+        <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms & Conditions</a>
-        </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="guide.html">Guide</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Services</h3>
+        <ul class="footer-links">
+          <li><a href="booking.html">Hotel Booking</a></li>
+          <li><a href="guide.html">Tour Guides</a></li>
+          <li><a href="vehicles.html">Vehicle Rental</a></li>
+          <li><a href="education.html">Education Tours</a></li>
+          <li><a href="packages.html">Custom Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <ul class="contact-info">
+          <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+          <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+          <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+          <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+        </ul>
       </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-  <script src="js/script.js"></script>
-  <script src="js/booking.js"></script>
-  <script src="js/theme.js"></script>
+<!-- JavaScript included directly in the HTML file -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (hamburger) {
+      hamburger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+    }
+
+    // FAQ Toggle
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        faqItem.classList.toggle('active');
+      });
+    });
+
+    // Number Input Controls
+    const minusButtons = document.querySelectorAll('.minus');
+    const plusButtons = document.querySelectorAll('.plus');
+
+    minusButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const input = this.nextElementSibling;
+        let value = parseInt(input.value);
+        if (value > parseInt(input.min)) {
+          input.value = value - 1;
+        }
+      });
+    });
+
+    plusButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        let value = parseInt(input.value);
+        if (value < parseInt(input.max)) {
+          input.value = value + 1;
+        }
+      });
+    });
+
+    // Booking Form Navigation
+    const nextButtons = document.querySelectorAll('.next-step');
+    const prevButtons = document.querySelectorAll('.prev-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+
+    nextButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const currentStep = parseInt(this.getAttribute('data-next')) - 1;
+        const nextStep = parseInt(this.getAttribute('data-next'));
+
+        // Update form visibility
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        document.getElementById(`step-${nextStep}`).classList.add('active');
+
+        // Update progress indicator
+        progressSteps.forEach(step => {
+          if (parseInt(step.getAttribute('data-step')) < nextStep) {
+            step.classList.add('completed');
+          }
+          if (parseInt(step.getAttribute('data-step')) === nextStep) {
+            step.classList.add('active');
+          }
+        });
+
+        // Update booking summary if moving to payment step
+        if (nextStep === 2) {
+          updateBookingSummary();
+        }
+
+        // Scroll to top of form
+        window.scrollTo({
+          top: document.querySelector('.booking-forms').offsetTop - 100,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    prevButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const currentStep = parseInt(this.getAttribute('data-prev')) + 1;
+        const prevStep = parseInt(this.getAttribute('data-prev'));
+
+        // Update form visibility
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        document.getElementById(`step-${prevStep}`).classList.add('active');
+
+        // Update progress indicator
+        progressSteps.forEach(step => {
+          if (parseInt(step.getAttribute('data-step')) === currentStep) {
+            step.classList.remove('active');
+          }
+        });
+
+        // Scroll to top of form
+        window.scrollTo({
+          top: document.querySelector('.booking-forms').offsetTop - 100,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Payment Method Selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+
+    paymentMethods.forEach(method => {
+      const radio = method.querySelector('input[type="radio"]');
+
+      method.addEventListener('click', function() {
+        paymentMethods.forEach(m => m.classList.remove('active'));
+        this.classList.add('active');
+        radio.checked = true;
+      });
+    });
+
+    // Update Booking Summary
+    function updateBookingSummary() {
+      const packageSelect = document.getElementById('package-type');
+      const travelDate = document.getElementById('travel-date');
+      const guests = document.getElementById('guests');
+
+      // Update summary elements
+      document.getElementById('summary-package').textContent = packageSelect.options[packageSelect.selectedIndex].text;
+
+      // Format date
+      if (travelDate.value) {
+        const date = new Date(travelDate.value);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('summary-date').textContent = date.toLocaleDateString('en-US', options);
+      }
+
+      document.getElementById('summary-guests').textContent = guests.value;
+    }
+
+    // Live Chat Button
+    const openChatBtn = document.getElementById('open-chat');
+
+    if (openChatBtn) {
+      openChatBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Live chat feature coming soon!');
+      });
+    }
+  });
+</script>
 </body>
 </html>

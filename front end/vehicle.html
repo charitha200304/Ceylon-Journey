@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental - Ceylon Journeys</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- All CSS styles included directly in the HTML file -->
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #00c2a8;
+            --primary-dark: #0a6e6e;
+            --primary-light: #e6f8f6;
+            --secondary-color: #ff9800;
+            --text-color: #333333;
+            --text-light: #666666;
+            --background-color: #ffffff;
+            --background-light: #f5f5f5;
+            --border-color: #dddddd;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+            --border-radius: 5px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-light);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--background-light);
+        }
+
+        .btn.active {
+            background-color: var(--primary-dark);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text-1 {
+            color: var(--primary-dark);
+        }
+
+        .logo-text-2 {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            margin-right: 20px;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons .btn-secondary {
+            border: 1px solid #eee;
+        }
+
+        .auth-buttons .btn-primary {
+            padding: 10px 20px;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* Page Banner */
+        .page-banner {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .page-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .banner-content h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .banner-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        /* Vehicle Rental Section */
+        .vehicle-rental-section {
+            padding: 80px 0;
+        }
+
+        /* Search and Filter */
+        .search-filter {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .search-filter h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .filter-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 15px;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Vehicle Categories */
+        .vehicle-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .category-btn i {
+            margin-right: 8px;
+        }
+
+        /* Vehicle Grid */
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .vehicle-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vehicle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .vehicle-card:hover .vehicle-image img {
+            transform: scale(1.05);
+        }
+
+        .vehicle-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .vehicle-details {
+            padding: 20px;
+        }
+
+        .vehicle-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .vehicle-type {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .vehicle-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .feature i {
+            color: var(--primary-color);
+        }
+
+        .vehicle-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        /* Rental Information */
+        .rental-info {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .rental-info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .rental-info p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background-color: var(--primary-light);
+            padding: 25px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card i {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .info-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .faq-section h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            cursor: pointer;
+        }
+
+        .faq-question h3 {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .faq-question i {
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 20px;
+        }
+
+        .faq-answer p {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background-color: var(--primary-color);
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            border-radius: 10px;
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta-btn {
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .cta-btn-primary {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .cta-btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .cta-btn-secondary {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .cta-btn-secondary:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo a {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .footer-logo span:first-child {
+            color: var(--primary-dark);
+        }
+
+        .footer-logo span:last-child {
+            color: var(--primary-color);
+        }
+
+        .footer-column p {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-info li {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #ccc;
+            transition: var(--transition);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-item:hover, .pagination-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: var(--transition);
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                z-index: 99;
+            }
+
+            .nav-menu.active {
+                display: flex;
+                left: 0;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .nav-links a.active::after {
+                display: none;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filter-form {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .vehicle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rental-info, .faq-section {
+                padding: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header Section -->
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">
+                <span class="logo-text-1">Ceylon</span><span class="logo-text-2">Journeys</span>
+            </a>
+        </div>
+        <div class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="packages.html">Packages</a></li>
+                <li><a href="guide.html">Guide</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+                <a href="booking.html" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</header>
+
+<!-- Page Banner -->
+<section class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+    <div class="banner-content">
+        <h1>Vehicle Rental</h1>
+        <p>Explore Sri Lanka with comfort and freedom</p>
+    </div>
+</section>
+
+<!-- Vehicle Rental Section -->
+<section class="vehicle-rental-section">
+    <div class="container">
+        <!-- Search and Filter -->
+        <div class="search-filter">
+            <h2>Find Your Perfect Vehicle</h2>
+            <form class="filter-form">
+                <div class="filter-group">
+                    <label for="pickup-location">Pickup Location</label>
+                    <select id="pickup-location" required>
+                        <option value="">Select location</option>
+                        <option value="colombo">Colombo</option>
+                        <option value="kandy">Kandy</option>
+                        <option value="galle">Galle</option>
+                        <option value="negombo">Negombo</option>
+                        <option value="airport">Bandaranaike International Airport</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dropoff-location">Drop-off Location</label>
+                    <select id="dropoff-location">
+                        <option value="">Same as pickup</option>
+                        <option value="colombo">Colombo</option>
+                        <option value="kandy">Kandy</option>
+                        <option value="galle">Galle</option>
+                        <option value="negombo">Negombo</option>
+                        <option value="airport">Bandaranaike International Airport</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="pickup-date">Pickup Date</label>
+                    <input type="date" id="pickup-date" required>
+                </div>
+                <div class="filter-group">
+                    <label for="dropoff-date">Drop-off Date</label>
+                    <input type="date" id="dropoff-date" required>
+                </div>
+                <div class="filter-group">
+                    <label for="vehicle-type">Vehicle Type</label>
+                    <select id="vehicle-type">
+                        <option value="">All Types</option>
+                        <option value="economy">Economy</option>
+                        <option value="compact">Compact</option>
+                        <option value="suv">SUV</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="van">Van</option>
+                    </select>
+                </div>
+                <div class="filter-buttons">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Search Vehicles</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Vehicle Categories -->
+        <div class="vehicle-categories">
+            <button class="category-btn active"><i class="fas fa-car"></i> All Vehicles</button>
+            <button class="category-btn"><i class="fas fa-car-side"></i> Economy</button>
+            <button class="category-btn"><i class="fas fa-car"></i> Compact</button>
+            <button class="category-btn"><i class="fas fa-truck-monster"></i> SUV</button>
+            <button class="category-btn"><i class="fas fa-car-side"></i> Luxury</button>
+            <button class="category-btn"><i class="fas fa-shuttle-van"></i> Van</button>
+        </div>
+
+        <!-- Vehicle Grid -->
+        <div class="vehicle-grid">
+            <!-- Vehicle Card 1 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Toyota Corolla">
+                    <div class="vehicle-tag">Most Popular</div>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Corolla</h3>
+                    <p class="vehicle-type">Economy | Manual</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 5 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 2 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-gas-pump"></i> Fuel Efficient</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$35 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Card 2 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Honda Civic">
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Honda Civic</h3>
+                    <p class="vehicle-type">Compact | Automatic</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 5 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 3 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-gas-pump"></i> Fuel Efficient</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$40 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Card 3 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Toyota Fortuner">
+                    <div class="vehicle-tag">4WD</div>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Fortuner</h3>
+                    <p class="vehicle-type">SUV | Automatic</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 7 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 4 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-mountain"></i> All Terrain</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$75 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Card 4 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1436&q=80" alt="BMW 5 Series">
+                    <div class="vehicle-tag">Luxury</div>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">BMW 5 Series</h3>
+                    <p class="vehicle-type">Luxury | Automatic</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 5 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 3 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-music"></i> Premium Audio</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$120 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Card 5 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1551522435-a13afa10f103?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Toyota Hiace">
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Hiace</h3>
+                    <p class="vehicle-type">Van | Manual</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 12 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 8 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-users"></i> Group Travel</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$85 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Card 6 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Suzuki Swift">
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Suzuki Swift</h3>
+                    <p class="vehicle-type">Economy | Manual</p>
+                    <div class="vehicle-features">
+                        <div class="feature"><i class="fas fa-user"></i> 5 Seats</div>
+                        <div class="feature"><i class="fas fa-suitcase"></i> 2 Bags</div>
+                        <div class="feature"><i class="fas fa-snowflake"></i> A/C</div>
+                        <div class="feature"><i class="fas fa-gas-pump"></i> Fuel Efficient</div>
+                    </div>
+                    <div class="vehicle-price">
+                        <div class="price">$30 <span>/ day</span></div>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#" class="pagination-item active">1</a>
+            <a href="#" class="pagination-item">2</a>
+            <a href="#" class="pagination-item">3</a>
+            <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+        </div>
+
+        <!-- Rental Information -->
+        <div class="rental-info">
+            <h2>Vehicle Rental Information</h2>
+            <p>At Ceylon Journeys, we offer a wide range of vehicles to suit your travel needs in Sri Lanka. Whether you're looking for an economical car for city exploration, a rugged SUV for adventure trips, or a spacious van for group travel, we have the perfect vehicle for you.</p>
+            <p>All our vehicles are well-maintained, regularly serviced, and come with comprehensive insurance for your peace of mind. Our rental packages include unlimited mileage, 24/7 roadside assistance, and flexible pickup and drop-off options.</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fas fa-id-card"></i>
+                    <h3>Rental Requirements</h3>
+                    <p>Valid driver's license, passport, credit card, and minimum age of 21 years. International driving permit recommended for foreign visitors.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Insurance Options</h3>
+                    <p>Basic insurance included. Optional comprehensive coverage available for additional protection against damages and theft.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-gas-pump"></i>
+                    <h3>Fuel Policy</h3>
+                    <p>All vehicles are provided with a full tank of fuel and should be returned with a full tank. Refueling service available for an additional fee.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-route"></i>
+                    <h3>Mileage Policy</h3>
+                    <p>Unlimited mileage included in all rental packages. Drive as much as you want without worrying about extra charges.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What documents do I need to rent a vehicle?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>To rent a vehicle, you'll need a valid driver's license, passport, and a credit card for the security deposit. International visitors should have an International Driving Permit (IDP) along with their national driver's license. The minimum age requirement is 21 years, and drivers under 25 may be subject to a young driver surcharge.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Is insurance included in the rental price?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, basic insurance (Collision Damage Waiver and Theft Protection) is included in the rental price. However, this comes with a deductible amount that you're responsible for in case of damage or theft. We offer additional insurance options to reduce or eliminate the deductible for complete peace of mind.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Can I pick up the vehicle in one location and return it to another?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer one-way rentals between our major locations in Sri Lanka. This service is subject to availability and may incur an additional one-way fee depending on the distance between locations. Please specify your pickup and drop-off locations during the booking process.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What happens if I return the vehicle late?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We provide a grace period of 59 minutes after your scheduled return time. Beyond this grace period, you'll be charged for an additional day of rental. If you know you'll be late, please contact our customer service to extend your rental period and avoid unexpected charges.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do you offer chauffeur or driver services?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer professional driver services for all our vehicles at an additional daily rate. Our drivers are experienced, knowledgeable about local routes, and speak English. This option is popular for tourists who want to enjoy the scenery without the stress of navigating unfamiliar roads.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="container">
+                <h2>Ready to Explore Sri Lanka?</h2>
+                <p>Book your vehicle today and enjoy the freedom to discover Sri Lanka at your own pace. Special discounts available for long-term rentals and early bookings.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-btn cta-btn-primary">Book a Vehicle Now</a>
+                    <a href="contact.html" class="cta-btn cta-btn-secondary">Contact Us for Special Requests</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <a href="index.html"><span>Ceylon</span><span>Journeys</span></a>
+                </div>
+                <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="hotels.html">Hotel Booking</a></li>
+                    <li><a href="vehicles.html">Vehicle Rental</a></li>
+                    <li><a href="guides.html">Tour Guides</a></li>
+                    <li><a href="education.html">Education Tours</a></li>
+                    <li><a href="custom.html">Custom Packages</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+                    <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+                    <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript included directly in the HTML file -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+        }
+
+        // FAQ Toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Category Buttons
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Here you would typically filter the vehicles based on category
+                // For demo purposes, we're just toggling the active class
+            });
+        });
+
+        // Date validation for rental form
+        const pickupDateInput = document.getElementById('pickup-date');
+        const dropoffDateInput = document.getElementById('dropoff-date');
+
+        if (pickupDateInput && dropoffDateInput) {
+            // Set minimum date to today
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayString = `${yyyy}-${mm}-${dd}`;
+
+            pickupDateInput.setAttribute('min', todayString);
+
+            // Update dropoff min date when pickup date changes
+            pickupDateInput.addEventListener('change', function() {
+                dropoffDateInput.setAttribute('min', this.value);
+
+                // If dropoff date is before new pickup date, reset it
+                if (dropoffDateInput.value && dropoffDateInput.value < this.value) {
+                    dropoffDateInput.value = this.value;
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

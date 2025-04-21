@@ -270,7 +270,7 @@
 
     <button type="submit" class="submit-btn" id="loginBtn">Sign In</button>
 
-    <a href="#" class="back-link">
+    <a href="login-selector-simple.html" class="back-link">
       <i class="fas fa-arrow-left"></i>
       Back to Login Selection
     </a>
@@ -343,7 +343,7 @@
 
       // Perform the AJAX request to your Spring Boot backend
       $.ajax({
-        url: 'http://localhost:8080/auth/login/verify', // Correct URL to your endpoint
+        url: 'http://localhost:8080/auth/login', // Correct URL to your endpoint
         type: 'POST',
         contentType: 'application/json', // Important: Tell the server we're sending JSON
         data: JSON.stringify(loginData), // Convert the data to JSON string

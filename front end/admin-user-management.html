@@ -906,7 +906,7 @@
                 <i class="fas fa-moon"></i>
                 <span>Dark Mode</span>
             </button>
-            <a href="login-selector-simple.html" class="logout-btn">
+            <a href="#" class="logout-btn" id="log-out">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
@@ -1034,6 +1034,7 @@
 
 <script>
     $(document).ready(function () {
+        // DOM Elements
         const $sidebarToggle = $('#sidebar-toggle');
         const $sidebar = $('.sidebar');
         const $themeToggle = $('#theme-toggle');
@@ -1050,9 +1051,17 @@
         const $dataTable = $('.data-table tbody');
         const $table = $('.data-table');
         const $selectAllUsers = $('#select-all-users');
+        const logoutBtn = $('#log-out');
 
+        logoutBtn.on('click', function (e) {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = "login-selector-simple.html";
+        });
 
+        // Constants
         const AUTH_TOKEN_KEY = 'authToken';
+        const API_BASE_URL = 'http://localhost:8080/api/user';
         let editingUserId = null;
 
         // --- Helper Functions ---
@@ -1064,31 +1073,42 @@
 
             setTimeout(() => {
                 toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500); // Remove after fade out
-            }, 2000); // Display for 2 seconds
-        }
-
-        function showError(message) {
-            showToast(message, 'error');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
         }
 
         function getAuthHeader() {
-            const token = localStorage.getItem(AUTH_TOKEN_KEY);
+            const token = localStorage.getItem('jwtToken');
+            console.log(token);
             if (!token) {
-                window.location.href = "login.html";
+                // window.location.href = "login.html";
                 return null;
             }
-            return { 'Authorization': `Bearer ${token}` };
+            return {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
         }
 
-        function handleApiError(xhr, defaultMessage = 'Operation failed') {
-            if (xhr.status === 401 || xhr.status === 403) {
-                showError(xhr.status === 401 ?
-                    "Session expired. Please log in again." :
-                    "Access denied. You don't have permission for this action.");
-                window.location.href = "login.html";
+        function handleApiError(error, defaultMessage = 'Operation failed') {
+            console.error('API Error:', error);
+
+            let message = defaultMessage;
+            if (error.responseJSON && error.responseJSON.message) {
+                message = error.responseJSON.message;
+            } else if (error.statusText) {
+                message = error.statusText;
+            }
+
+            if (error.status === 401) {
+                showToast("Session expired. Please log in again.", 'error');
+                setTimeout(() => {
+                    // window.location.href = "login.html";
+                }, 1500);
+            } else if (error.status === 403) {
+                showToast("Access denied. You don't have permission for this action.", 'error');
             } else {
-                showError(xhr.responseJSON?.message || xhr.responseText || defaultMessage);
+                showToast(message, 'error');
             }
         }
 
@@ -1096,18 +1116,18 @@
         function openModal(title, userId = null) {
             $modalTitle.text(title);
             editingUserId = userId;
+
+            // Make password optional for edits, required for new users
+            $('#password').prop('required', userId === null);
+
             $modal.addClass('active');
-            if (userId) {
-                $('#password').prop('required', false);
-            } else {
-                $('#password').prop('required', true);
-            }
         }
 
         function closeModal() {
             $modal.removeClass('active');
             $userForm[0].reset();
             editingUserId = null;
+            $('#user-id').val(''); // Clear hidden ID field
         }
 
         // --- User CRUD Operations ---
@@ -1116,47 +1136,49 @@
             if (!headers) return;
 
             $.ajax({
-                url: 'http://localhost:8080/api/user/getAll',
+                url: `${API_BASE_URL}/getAll`,
                 method: 'GET',
                 headers: headers,
                 success: function (response) {
-                    renderUsers(response?.data || []);
+                    if (response && Array.isArray(response.data)) {
+                        renderUsers(response.data);
+                    } else {
+                        showToast("Invalid response format from server", 'error');
+                    }
                 },
-                error: function (xhr) {
-                    handleApiError(xhr, 'Failed to load users');
-                }
+                error: handleApiError
             });
         }
 
         function renderUsers(users) {
-            let usersHtml = '';
+            $dataTable.empty();
 
-            if (users.length > 0) {
-                users.forEach(function (user) {
-                    usersHtml += `
-                            <tr>
-                                <td><input type="checkbox" class="select-user" data-id="${user.id}"></td>
-                                <td>${user.id}</td>
-                                <td>${user.username}</td>
-                                <td>${user.email}</td>
-                                <td>••••••</td>
-                                <td>${user.role}</td>
-                                <td class="actions">
-                                    <button class="btn btn-primary edit-btn" data-id="${user.id}">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </button>
-                                    <button class="btn btn-danger delete-btn" data-id="${user.id}">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                });
-            } else {
-                usersHtml = '<tr><td colspan="7" class="text-center py-4">No users found</td></tr>';
+            if (users.length === 0) {
+                $dataTable.append('<tr><td colspan="7" class="text-center py-4">No users found</td></tr>');
+                return;
             }
 
-            $dataTable.html(usersHtml);
+            users.forEach(user => {
+                $dataTable.append(`
+                <tr>
+                    <td><input type="checkbox" class="select-user" data-id="${user.id}"></td>
+                    <td>${user.id}</td>
+                    <td>${user.username || 'N/A'}</td>
+                    <td>${user.email || 'N/A'}</td>
+                    <td>••••••</td>
+                    <td>${user.role || 'USER'}</td>
+                    <td class="actions">
+                        <button class="btn btn-primary edit-btn" data-id="${user.id}">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger delete-btn" data-id="${user.id}">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `);
+            });
+
             $table.removeClass('hidden');
             initTableEvents();
             $selectAllUsers.prop('checked', false);
@@ -1167,20 +1189,18 @@
             if (!headers) return;
 
             $.ajax({
-                url: `http://localhost:8080/api/user/getById/${userId}`,
+                url: `${API_BASE_URL}/getById/${userId}`,
                 method: 'GET',
                 headers: headers,
                 success: function (response) {
-                    if (response?.data) {
+                    if (response && response.data) {
                         populateForm(response.data);
                         openModal('Edit User', userId);
                     } else {
-                        showError('User not found');
+                        showToast("User not found", 'error');
                     }
                 },
-                error: function (xhr) {
-                    handleApiError(xhr, 'Failed to fetch user data');
-                }
+                error: handleApiError
             });
         }
 
@@ -1189,7 +1209,7 @@
             $('#username').val(user.username);
             $('#email').val(user.email);
             $('#role').val(user.role);
-            $('#password').val(''); // Clear password field for security
+            $('#password').val('').prop('placeholder', 'Leave blank to keep current password');
         }
 
         function saveUser() {
@@ -1199,56 +1219,40 @@
             }
 
             const userData = {
+                id: editingUserId,
                 username: $('#username').val().trim(),
                 email: $('#email').val().trim(),
-                password: $('#password').val().trim(),
-                role: $('#role').val()
+                role: $('#role').val().toUpperCase(),
             };
+
+            // Only include password if it's not empty (for updates)
+            const password = $('#password').val().trim();
+            if (password) {
+                userData.password = password;
+            }
 
             const headers = getAuthHeader();
             if (!headers) return;
 
-            headers['Content-Type'] = 'application/json';
+            const request = editingUserId ?
+                $.ajax({
+                    url: `${API_BASE_URL}/updateUser`,
+                    method: 'PUT',
+                    headers: headers,
+                    data: JSON.stringify(userData)
+                }) :
+                $.ajax({
+                    url: `${API_BASE_URL}/addUser`,
+                    method: 'POST',
+                    headers: headers,
+                    data: JSON.stringify(userData)
+                });
 
-            if (editingUserId) {
-                updateUser(editingUserId, userData, headers);
-            } else {
-                addUser(userData, headers);
-            }
-        }
-
-        function addUser(userData, headers) {
-            $.ajax({
-                url: 'http://localhost:8080/api/user/addUser',
-                method: 'POST',
-                headers: headers,
-                data: JSON.stringify(userData),
-                success: function (response) {
-                    showToast(response.message || "User added successfully");
-                    loadUsers();
-                    closeModal();
-                },
-                error: function (xhr) {
-                    handleApiError(xhr, 'Failed to add user');
-                }
-            });
-        }
-
-        function updateUser(userId, userData, headers) {
-            $.ajax({
-                url: `http://localhost:8080/api/user/updateUser`,
-                method: 'PUT',
-                headers: headers,
-                data: JSON.stringify({ id: userId, ...userData }),
-                success: function (response) {
-                    showToast(response.message || "User updated successfully");
-                    loadUsers();
-                    closeModal();
-                },
-                error: function (xhr) {
-                    handleApiError(xhr, 'Failed to update user');
-                }
-            });
+            request.done(function(response) {
+                showToast(response.message || (editingUserId ? "User updated successfully" : "User added successfully"));
+                loadUsers();
+                closeModal();
+            }).fail(handleApiError);
         }
 
         function deleteUser(userId) {
@@ -1258,46 +1262,72 @@
             if (!headers) return;
 
             $.ajax({
-                url: `http://localhost:8080/api/user/deleteUser/${userId}`,
+                url: `${API_BASE_URL}/deleteUser/${userId}`,
                 method: 'DELETE',
                 headers: headers,
-                success: function (response) {
+                success: function(response) {
                     showToast(response.message || "User deleted successfully");
                     loadUsers();
                 },
-                error: function (xhr) {
-                    handleApiError(xhr, 'Failed to delete user');
-                }
+                error: handleApiError
             });
-        }
-
-        function showSuccess(message) {
-            console.log(message);
-            // You could replace this with a toast notification
-            alert(message);
         }
 
         // --- Event Handlers ---
         function initTableEvents() {
-            $('.edit-btn').off('click').on('click', function () {
-                getUserById($(this).data('id'));
+            $('.edit-btn').off('click').on('click', function() {
+                const userId = $(this).data('id');
+                if (userId) getUserById(userId);
             });
 
-            $('.delete-btn').off('click').on('click', function () {
-                deleteUser($(this).data('id'));
+            $('.delete-btn').off('click').on('click', function() {
+                const userId = $(this).data('id');
+                if (userId) deleteUser(userId);
             });
         }
 
+        // Form submission handler
+        $userForm.on('submit', function(e) {
+            e.preventDefault();
+            saveUser();
+        });
+
+        // Button event bindings
         $addUserBtn.on('click', () => openModal('Add New User'));
         $modalCloseBtn.add($modalCancelBtn).on('click', closeModal);
-        $modalSaveBtn.on('click', saveUser);
+        $modalSaveBtn.on('click', function() {
+            $userForm.trigger('submit');
+        });
 
-        $selectAllUsers.on('change', function () {
+        // Select all checkbox
+        $selectAllUsers.on('change', function() {
             $('.select-user').prop('checked', this.checked);
         });
 
         // --- Initialization ---
         loadUsers();
+
+        // Sidebar toggle
+        $sidebarToggle.on('click', function() {
+            $sidebar.toggleClass('collapsed');
+            $body.toggleClass('sidebar-collapsed');
+        });
+
+        // Theme toggle
+        $themeToggle.on('click', function() {
+            $body.toggleClass('dark-theme');
+            const isDark = $body.hasClass('dark-theme');
+            $themeIcon.toggleClass('fa-sun fa-moon');
+            $themeText.text(isDark ? 'Light Mode' : 'Dark Mode');
+            localStorage.setItem('darkTheme', isDark);
+        });
+
+        // Initialize theme from localStorage
+        if (localStorage.getItem('darkTheme') === 'true') {
+            $body.addClass('dark-theme');
+            $themeIcon.removeClass('fa-moon').addClass('fa-sun');
+            $themeText.text('Light Mode');
+        }
     });
 </script>
 

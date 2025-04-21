@@ -1,272 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Travel Packages - Ceylon Journeys</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/theme.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Packages - Ceylon Journeys</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Package Filters Section Styles */
+        .package-filters {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: white;
+            font-size: 0.95rem;
+            color: #333;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .filter-btn, .reset-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: #2a7f62;
+            color: white;
+            border: none;
+        }
+
+        .filter-btn:hover {
+            background-color: #236c53;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background-color: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .reset-btn:hover {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .filter-btn, .reset-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <header>
-      <div class="logo">
-          <a href="index.html">Ceylon<span>Journeys</span></a>
-      </div>
-      <nav>
-          <ul class="nav-links">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="destinations.html">Destinations</a></li>
-              <li><a href="packages.html" class="active">Packages</a></li>
-              <li><a href="guide.html">Guide</a></li>
-              <li><a href="education.html">Education</a></li>
-              <li><a href="reviews.html">Reviews</a></li>
-              <li><a href="contact.html">Contact</a></li>
-          </ul>
-      </nav>
-      <!-- <div class="theme-toggle" aria-label="Toggle dark mode">
-          <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
-          <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
-      </div> -->
-      <div class="auth-buttons">
-          <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
-          <a href="booking.html" class="btn btn-primary">Book Now</a>
-      </div>
-      <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-      </div>
-  </header>
+<!-- Header Section -->
+<header>
+    <div class="logo">
+        <a href="index.html">Ceylon<span>Journeys</span></a>
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html" class="active">Packages</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="auth-buttons">
+        <a href="login-selector-simple.html" class="btn btn-secondary">Sign In</a>
+        <a href="booking.html" class="btn btn-primary">Book Now</a>
+    </div>
+    <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+</header>
 
-  <!-- Page Banner -->
-  <section class="page-banner" style="background-image: url('images/travelpackage.jpg');">
-      <div class="banner-content">
-          <h1>Travel Packages</h1>
-          <p>Customized travel experiences for every budget</p>
-      </div>
-  </section>
+<!-- Page Banner -->
+<section class="page-banner" style="background-image: url('images/travelpackage.jpg');">
+    <div class="banner-content">
+        <h1>Travel Packages</h1>
+        <p>Customized travel experiences for every budget</p>
+    </div>
+</section>
 
-  <!-- Package Filters -->
-  <section class="package-filters">
-      <div class="container">
-          <div class="filter-container">
-              <div class="filter-group">
-                  <label for="duration">Duration:</label>
-                  <select id="duration">
-                      <option value="all">All Durations</option>
-                      <option value="1-3">1-3 Days</option>
-                      <option value="4-7">4-7 Days</option>
-                      <option value="8-14">8-14 Days</option>
-                      <option value="15+">15+ Days</option>
-                  </select>
-              </div>
-              <div class="filter-group">
-                  <label for="budget">Budget:</label>
-                  <select id="budget">
-                      <option value="all">All Budgets</option>
-                      <option value="budget">Budget (Under $500)</option>
-                      <option value="standard">Standard ($500-$1000)</option>
-                      <option value="premium">Premium ($1000-$2000)</option>
-                      <option value="luxury">Luxury ($2000+)</option>
-                  </select>
-              </div>
-              <div class="filter-group">
-                  <label for="interest">Interest:</label>
-                  <select id="interest">
-                      <option value="all">All Interests</option>
-                      <option value="cultural">Cultural</option>
-                      <option value="adventure">Adventure</option>
-                      <option value="beach">Beach</option>
-                      <option value="wildlife">Wildlife</option>
-                      <option value="education">Education</option>
-                  </select>
-              </div>
-              <button class="btn btn-primary filter-btn">Apply Filters</button>
-          </div>
-      </div>
-  </section>
+<!-- Package Filters -->
+<section class="package-filters">
+    <div class="container">
+        <div class="filter-container">
+            <h2 class="filter-title">Find Your Perfect Sri Lanka Experience</h2>
+            <p class="filter-subtitle">Filter by your preferences to discover ideal travel packages</p>
 
-  <!-- Featured Packages -->
-  <section class="featured-packages">
-      <div class="container">
-          <div class="section-header">
-              <h2>Featured Packages</h2>
-              <p>Our most popular travel experiences</p>
-          </div>
-          
-          <div class="package-grid">
-              <div class="package-card featured" id="cultural">
-                  <div class="package-badge">Popular</div>
-                  <img src="images/Polonnaruwa-Day-Tour-Banner-1-1024x640.jpg" alt="Cultural Heritage Tour">
-                  <div class="package-info">
-                      <h3>Cultural Heritage Tour</h3>
-                      <p class="duration"><i class="fas fa-clock"></i> 7 Days / 6 Nights</p>
-                      <div class="package-highlights">
-                          <span><i class="fas fa-map-marker-alt"></i> Colombo, Kandy, Sigiriya, Anuradhapura</span>
-                          <span><i class="fas fa-users"></i> Max 12 people</span>
-                      </div>
-                      <p>Explore Sri Lanka's rich cultural heritage with visits to ancient cities, temples, and UNESCO World Heritage sites. Experience traditional dance performances, visit tea plantations, and immerse yourself in local culture.</p>
-                      <div class="package-features">
-                          <span><i class="fas fa-hotel"></i> 4-star hotels</span>
-                          <span><i class="fas fa-utensils"></i> All meals</span>
-                          <span><i class="fas fa-car"></i> Private transport</span>
-                          <span><i class="fas fa-user-tie"></i> English guide</span>
-                      </div>
-                      <div class="package-footer">
-                          <span class="price">From $899</span>
-                          <a href="package-detail.html?id=cultural" class="btn btn-primary">View Details</a>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="package-card featured" id="beach">
-                  <img src="images/kk-beach-sri-lanka-beach.webp" alt="Beach Tour">
-                  <div class="package-info">
-                      <h3>Tropical Beach Getaway</h3>
-                      <p class="duration"><i class="fas fa-clock"></i> 5 Days / 4 Nights</p>
-                      <div class="package-highlights">
-                          <span><i class="fas fa-map-marker-alt"></i> Negombo, Mirissa, Unawatuna</span>
-                          <span><i class="fas fa-users"></i> Max 10 people</span>
-                      </div>
-                      <p>Relax on pristine beaches, enjoy water activities like snorkeling and diving, and witness the magnificent blue whales. Perfect for beach lovers and those seeking relaxation.</p>
-                      <div class="package-features">
-                          <span><i class="fas fa-hotel"></i> Beach resorts</span>
-                          <span><i class="fas fa-utensils"></i> Breakfast & dinner</span>
-                          <span><i class="fas fa-car"></i> Airport transfers</span>
-                          <span><i class="fas fa-swimmer"></i> Beach activities</span>
-                      </div>
-                      <div class="package-footer">
-                          <span class="price">From $699</span>
-                          <a href="package-detail.html?id=beach" class="btn btn-primary">View Details</a>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="package-card featured" id="adventure">
-                  <div class="package-badge">Best Value</div>
-                  <img src="images/yala-national-park-jeep-safari_63573.jpg" alt="Adventure Tour">
-                  <div class="package-info">
-                      <h3>Adventure & Wildlife Safari</h3>
-                      <p class="duration"><i class="fas fa-clock"></i> 8 Days / 7 Nights</p>
-                      <div class="package-highlights">
-                          <span><i class="fas fa-map-marker-alt"></i> Colombo, Kitulgala, Yala, Udawalawe</span>
-                          <span><i class="fas fa-users"></i> Max 8 people</span>
-                      </div>
-                      <p>Experience thrilling adventures including white water rafting, hiking, and wildlife safaris. Spot leopards, elephants, and exotic birds in their natural habitats.</p>
-                      <div class="package-features">
-                          <span><i class="fas fa-hotel"></i> Mix of hotels & camps</span>
-                          <span><i class="fas fa-utensils"></i> All meals</span>
-                          <span><i class="fas fa-car"></i> 4x4 jeep tours</span>
-                          <span><i class="fas fa-hiking"></i> Adventure gear</span>
-                      </div>
-                      <div class="package-footer">
-                          <span class="price">From $1,099</span>
-                          <a href="package-detail.html?id=adventure" class="btn btn-primary">View Details</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="destination">Destination:</label>
+                    <select id="destination" class="filter-select">
+                        <option value="all">All Destinations</option>
+                        <option value="colombo">Colombo</option>
+                        <option value="kandy">Kandy</option>
+                        <option value="galle">Galle</option>
+                        <option value="anuradhapura">Anuradhapura</option>
+                        <option value="sigiriya">Sigiriya</option>
+                        <option value="nuwaraeliya">Nuwara Eliya</option>
+                        <option value="yala">Yala</option>
+                    </select>
+                </div>
 
-  <!-- Custom Package Section -->
-  <!-- <section class="custom-package bg-light">
-      <div class="container">
-          <div class="custom-package-content">
-              <div class="custom-package-info">
-                  <h2>Create Your Custom Package</h2>
-                  <p>Can't find what you're looking for? Let us design a personalized itinerary just for you.</p>
-                  <ul class="custom-package-features">
-                      <li><i class="fas fa-check-circle"></i> Tailor-made itineraries</li>
-                      <li><i class="fas fa-check-circle"></i> Flexible dates and durations</li>
-                      <li><i class="fas fa-check-circle"></i> Personalized experiences</li>
-                      <li><i class="fas fa-check-circle"></i> Accommodation choices for every budget</li>
-                      <li><i class="fas fa-check-circle"></i> Expert travel consultants</li>
-                  </ul>
-                  <a href="custom.html" class="btn btn-primary">Design Your Trip</a>
-              </div>
-              <div class="custom-package-image">
-                  <img src="images/custom-tour-packages-services-500x500.webp" alt="Custom Package">
-              </div>
-          </div>
-      </div>
-  </section> -->
+                <div class="filter-group">
+                    <label for="duration">Trip Length:</label>
+                    <select id="duration" class="filter-select">
+                        <option value="all">All Durations</option>
+                        <option value="1-3">Short (1-3 Days)</option>
+                        <option value="4-7">Weekend (4-7 Days)</option>
+                        <option value="8-14">Extended (8-14 Days)</option>
+                        <option value="15+">Long (15+ Days)</option>
+                    </select>
+                </div>
 
-  <!-- Newsletter -->
-  <section class="newsletter">
-      <div class="container">
-          <div class="newsletter-content">
-              <h2>Subscribe to Our Newsletter</h2>
-              <p>Get exclusive deals, travel tips, and updates delivered to your inbox</p>
-              <form class="newsletter-form">
-                  <input type="email" placeholder="Your email address">
-                  <button type="submit" class="btn btn-primary">Subscribe</button>
-              </form>
-          </div>
-      </div>
-  </section>
+                <div class="filter-group">
+                    <label for="budget">Price Range:</label>
+                    <select id="budget" class="filter-select">
+                        <option value="all">All Budgets</option>
+                        <option value="budget">Economy (Under $500)</option>
+                        <option value="standard">Standard ($500-$1,000)</option>
+                        <option value="premium">Premium ($1,000-$2,000)</option>
+                        <option value="luxury">Luxury ($2,000+)</option>
+                    </select>
+                </div>
 
-  <!-- Footer -->
-  <footer>
-      <div class="container">
-          <div class="footer-content">
-              <div class="footer-column">
-                  <div class="footer-logo">
-                      <a href="index.html">Ceylon<span>Journeys</span></a>
-                  </div>
-                  <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
-                  <div class="social-links">
-                      <a href="#"><i class="fab fa-facebook-f"></i></a>
-                      <a href="#"><i class="fab fa-twitter"></i></a>
-                      <a href="#"><i class="fab fa-instagram"></i></a>
-                      <a href="#"><i class="fab fa-youtube"></i></a>
-                  </div>
-              </div>
-              <div class="footer-column">
-                  <h3>Quick Links</h3>
-                  <ul class="footer-links">
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="destinations.html">Destinations</a></li>
-                      <li><a href="packages.html">Packages</a></li>
-                      <li><a href="guide.html">Guide</a></li>
-                      <li><a href="reviews.html">Reviews</a></li>
-                      <li><a href="contact.html">Contact</a></li>
-                  </ul>
-              </div>
-              <div class="footer-column">
-                  <h3>Services</h3>
-                  <ul class="footer-links">
-                      <li><a href="hotels.html">Hotel Booking</a></li>
-                      <li><a href="guides.html">Tour Guides</a></li>
-                      <li><a href="vehicles.html">Vehicle Rental</a></li>
-                      <li><a href="education.html">Education Tours</a></li>
-                      <li><a href="custom.html">Custom Packages</a></li>
-                  </ul>
-              </div>
-              <div class="footer-column">
-                  <h3>Contact Us</h3>
-                  <ul class="contact-info">
-                      <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
-                      <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
-                      <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
-                      <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
-                  </ul>
-              </div>
-          </div>
-          <div class="footer-bottom">
-              <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
-              <div class="footer-bottom-links">
-                  <a href="privacy.html">Privacy Policy</a>
-                  <a href="terms.html">Terms & Conditions</a>
-              </div>
-          </div>
-      </div>
-  </footer>
+                <div class="filter-group">
+                    <label for="interest">Travel Style:</label>
+                    <select id="interest" class="filter-select">
+                        <option value="all">All Styles</option>
+                        <option value="cultural">Cultural & Heritage</option>
+                        <option value="adventure">Adventure & Wildlife</option>
+                        <option value="beach">Beach & Relaxation</option>
+                        <option value="wellness">Wellness & Ayurveda</option>
+                        <option value="family">Family Friendly</option>
+                    </select>
+                </div>
+            </div>
 
-  <script src="js/script.js"></script>
-  <script src="js/theme.js"></script>
+            <div class="filter-actions">
+                <button class="btn btn-primary filter-btn">
+                    <i class="fas fa-search"></i> Search Packages
+                </button>
+                <button class="btn btn-secondary reset-btn">
+                    <i class="fas fa-undo"></i> Reset Filters
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Packages -->
+<section class="featured-packages">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Packages</h2>
+            <p>Our most popular travel experiences</p>
+        </div>
+
+        <div class="package-grid">
+            <div class="package-card featured" id="cultural">
+                <div class="package-badge">Popular</div>
+                <img src="images/Polonnaruwa-Day-Tour-Banner-1-1024x640.jpg" alt="Cultural Heritage Tour">
+                <div class="package-info">
+                    <h3>Cultural Heritage Tour</h3>
+                    <p class="duration"><i class="fas fa-clock"></i> 7 Days / 6 Nights</p>
+                    <div class="package-highlights">
+                        <span><i class="fas fa-map-marker-alt"></i> Colombo, Kandy, Sigiriya, Anuradhapura</span>
+                        <span><i class="fas fa-users"></i> Max 12 people</span>
+                    </div>
+                    <p>Explore Sri Lanka's rich cultural heritage with visits to ancient cities, temples, and UNESCO World Heritage sites. Experience traditional dance performances, visit tea plantations, and immerse yourself in local culture.</p>
+                    <div class="package-features">
+                        <span><i class="fas fa-hotel"></i> 4-star hotels</span>
+                        <span><i class="fas fa-utensils"></i> All meals</span>
+                        <span><i class="fas fa-car"></i> Private transport</span>
+                        <span><i class="fas fa-user-tie"></i> English guide</span>
+                    </div>
+                    <div class="package-footer">
+                        <span class="price">From $899</span>
+                        <a href="package-detail.html?id=cultural" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="package-card featured" id="beach">
+                <img src="images/kk-beach-sri-lanka-beach.webp" alt="Beach Tour">
+                <div class="package-info">
+                    <h3>Tropical Beach Getaway</h3>
+                    <p class="duration"><i class="fas fa-clock"></i> 5 Days / 4 Nights</p>
+                    <div class="package-highlights">
+                        <span><i class="fas fa-map-marker-alt"></i> Negombo, Mirissa, Unawatuna</span>
+                        <span><i class="fas fa-users"></i> Max 10 people</span>
+                    </div>
+                    <p>Relax on pristine beaches, enjoy water activities like snorkeling and diving, and witness the magnificent blue whales. Perfect for beach lovers and those seeking relaxation.</p>
+                    <div class="package-features">
+                        <span><i class="fas fa-hotel"></i> Beach resorts</span>
+                        <span><i class="fas fa-utensils"></i> Breakfast & dinner</span>
+                        <span><i class="fas fa-car"></i> Airport transfers</span>
+                        <span><i class="fas fa-swimmer"></i> Beach activities</span>
+                    </div>
+                    <div class="package-footer">
+                        <span class="price">From $699</span>
+                        <a href="package-detail.html?id=beach" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="package-card featured" id="adventure">
+                <div class="package-badge">Best Value</div>
+                <img src="images/yala-national-park-jeep-safari_63573.jpg" alt="Adventure Tour">
+                <div class="package-info">
+                    <h3>Adventure & Wildlife Safari</h3>
+                    <p class="duration"><i class="fas fa-clock"></i> 8 Days / 7 Nights</p>
+                    <div class="package-highlights">
+                        <span><i class="fas fa-map-marker-alt"></i> Colombo, Kitulgala, Yala, Udawalawe</span>
+                        <span><i class="fas fa-users"></i> Max 8 people</span>
+                    </div>
+                    <p>Experience thrilling adventures including white water rafting, hiking, and wildlife safaris. Spot leopards, elephants, and exotic birds in their natural habitats.</p>
+                    <div class="package-features">
+                        <span><i class="fas fa-hotel"></i> Mix of hotels & camps</span>
+                        <span><i class="fas fa-utensils"></i> All meals</span>
+                        <span><i class="fas fa-car"></i> 4x4 jeep tours</span>
+                        <span><i class="fas fa-hiking"></i> Adventure gear</span>
+                    </div>
+                    <div class="package-footer">
+                        <span class="price">From $1,099</span>
+                        <a href="package-detail.html?id=adventure" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get exclusive deals, travel tips, and updates delivered to your inbox</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <a href="index.html">Ceylon<span>Journeys</span></a>
+                </div>
+                <p>Your trusted travel partner for exploring the beauty of Sri Lanka. We offer customized travel packages, educational tours, and unforgettable experiences.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="booking.html">Hotel Booking</a></li>
+                    <li><a href="guide.html">Tour Guides</a></li>
+                    <li><a href="vehicle.html">Vehicle Rental</a></li>
+                    <li><a href="education.html">Education Tours</a></li>
+                    <li><a href="packages.html">Custom Packages</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Temple Road, Colombo, Sri Lanka</li>
+                    <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
+                    <li><i class="fas fa-envelope"></i> info@ceylonjourney.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ceylon Journeys. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/theme.js"></script>
 </body>
 </html>
-

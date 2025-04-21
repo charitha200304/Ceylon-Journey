@@ -79,81 +79,106 @@
 </div>
 
 <script>
-  // Form Validation
   document.addEventListener("DOMContentLoaded", function() {
     const adminLoginForm = document.getElementById("adminLoginForm");
 
     if (adminLoginForm) {
-      adminLoginForm.addEventListener("submit", function(e) {
+      adminLoginForm.addEventListener("submit", async function(e) {
         e.preventDefault();
 
+        // Get form elements
         const usernameInput = document.getElementById("admin-username");
         const passwordInput = document.getElementById("admin-password");
         const usernameError = document.getElementById("admin-usernameError");
         const passwordError = document.getElementById("admin-passwordError");
+        const btnSubmit = this.querySelector(".btn-submit");
 
-        // Reset errors
+        // Reset errors and UI
         usernameError.textContent = "";
         passwordError.textContent = "";
+        this.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+        this.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
 
+        // Validate inputs
         let isValid = true;
 
-        // Username validation
-        if (!usernameInput.value) {
+        if (!usernameInput.value.trim()) {
+          usernameInput.parentElement.classList.add('has-error');
+          usernameInput.classList.add('input-error');
           usernameError.textContent = "Username is required";
           isValid = false;
         }
 
-        // Password validation
-        if (!passwordInput.value) {
+        if (!passwordInput.value.trim()) {
+          passwordInput.parentElement.classList.add('has-error');
+          passwordInput.classList.add('input-error');
           passwordError.textContent = "Password is required";
           isValid = false;
         }
 
-        if (isValid) {
-          // Show loading state
-          const btnSubmit = this.querySelector(".btn-submit");
-          btnSubmit.classList.add("loading");
-          btnSubmit.disabled = true;
+        if (!isValid) return;
 
+        // Show loading state
+        btnSubmit.classList.add("loading");
+        btnSubmit.disabled = true;
+
+        try {
           // Prepare login data
           const loginData = {
-            username: usernameInput.value,
-            password: passwordInput.value,
-            role: "ADMIN"
+            username: usernameInput.value.trim(),
+            password: passwordInput.value.trim(),
+            role: "ADMIN" // Ensure your backend is expecting and handling this "role"
           };
 
-          // Send AJAX request
-          fetch("http://localhost:8080/auth/login/verify", {
+          // Make AJAX request
+          const response = await fetch("http://localhost:8080/auth/login", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Accept": "application/json"
             },
             body: JSON.stringify(loginData)
-          })
-                  .then(response => {
-                    if (!response.ok) {
-                      throw new Error("Invalid username or password");
-                    }
-                    return response.json();
-                  })
-                  .then(data => {
-                    if (data.token) {
-                      localStorage.setItem("jwtToken", data.token);
-                      window.location.href = "admin-hotel-management.html";
-                    } else {
-                      usernameError.textContent = data.message || "Login failed";
-                    }
-                  })
-                  .catch(error => {
-                    passwordError.textContent = error.message;
-                  })
-                  .finally(() => {
-                    if (btnSubmit) {
-                      btnSubmit.classList.remove("loading");
-                      btnSubmit.disabled = false;
-                    }
-                  });
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            // Handle specific error cases based on backend response
+            if (response.status === 401) {
+              passwordInput.parentElement.classList.add('has-error');
+              passwordInput.classList.add('input-error');
+              passwordError.textContent = data.message || "Invalid username or password";
+            } else if (response.status === 400) {
+              usernameInput.parentElement.classList.add('has-error');
+              usernameInput.classList.add('input-error');
+              usernameError.textContent = data.message || "Invalid request";
+            } else {
+              throw new Error(data.message || `Login failed with status ${response.status}`);
+            }
+            return;
+          }
+
+          // Handle successful login
+          if (data.token) {
+            localStorage.setItem("jwtToken", data.token);
+            localStorage.setItem("userRole", data.role || "ADMIN"); // Assuming backend sends role in response
+            window.location.href = "admin-hotel-management.html";
+          } else {
+            throw new Error("Authentication token missing in response");
+          }
+
+        } catch (error) {
+          console.error("Login error:", error);
+          passwordError.textContent = "Login failed. Please try again later.";
+
+          // Show error in UI
+          passwordInput.parentElement.classList.add('has-error');
+          passwordInput.classList.add('input-error');
+
+        } finally {
+          // Reset loading state
+          btnSubmit.classList.remove("loading");
+          btnSubmit.disabled = false;
         }
       });
 
@@ -171,7 +196,7 @@
     }
   });
 
-  // Simple email validation function
+  // Simple email validation function (not used in this login form)
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
