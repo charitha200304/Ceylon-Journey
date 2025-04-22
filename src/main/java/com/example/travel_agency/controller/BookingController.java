@@ -71,17 +71,17 @@ public class BookingController {
 
         emailService.sendBookingConfirmationEmail(
                 bookingDTO.getUserEmail(),
-                "Your Booking is Confirmed – NS TRAVELS 🌿\n",
+                "Your Booking is Confirmed –  Ceylon Journeys 🌿\n",
                 "Hi " + userDto.getUsername() + ",\n\n" +
                         "Your booking has been confirmed successfully. Here are the details:\n\n" +
                         "📅 Travel Date: " + bookingDTO.getTravelDate() + "\n" +
-                        "📍 Location: No.42, Karapitiya, Galle\n" +
-                        "📞 Contact: 076 209 9693\n\n" +
+                        "📍 Location: No.232/6, Wiskam place,Thalgasgoda,Ambalangoda\n" +
+                        "📞 Contact: 071 685 5976\n\n" +
                         "What to Expect:\n" +
                         "Our expert team is ready to provide you with a relaxing and professional experience. If you have any questions before your travel, feel free to call us!\n\n" +
                         "ExploreLanka Team\n" +
-                        "📍 No.42, Karapitiya, Galle\n" +
-                        "📞 076 209 9693"
+                        "📍 No.232/6, Wiskam place,Thalgasgoda,Ambalangoda\n" +
+                        "📞 Contact: 071 685 5976"
         );
 
         return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Booking Saved Successfully", bookingDTO));
