@@ -3,112 +3,96 @@ package com.example.travel_agency.service.impl;
 import com.example.travel_agency.dto.BookingDTO;
 import com.example.travel_agency.entity.Booking;
 import com.example.travel_agency.entity.Hotel;
+import com.example.travel_agency.entity.TravelPackages;
 import com.example.travel_agency.entity.User;
 import com.example.travel_agency.repository.BookingRepo;
 import com.example.travel_agency.repository.HotelRepo;
+import com.example.travel_agency.repository.TravelPackagesRepo;
 import com.example.travel_agency.repository.UsersRepo;
 import com.example.travel_agency.service.BookingService;
+import com.example.travel_agency.service.EmailService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
+@Transactional
 public class BookingServiceImpl implements BookingService {
     @Autowired
-    private BookingRepo bookingRepo;
+    private BookingRepo bookingRepository;
 
     @Autowired
-    private UsersRepo usersRepo;
+    private UsersRepo userRepository;
 
     @Autowired
-    private HotelRepo hotelRepo;
+    private TravelPackagesRepo travelPackageRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private EmailService emailService;
+
+    private static final Logger logger = Logger.getLogger(BookingServiceImpl.class.getName());
+
     @Override
     public void save(BookingDTO bookingDTO) {
-        Booking booking = modelMapper.map(bookingDTO, Booking.class);
+        System.out.println("save booking");
 
+        TravelPackages travelPackage = modelMapper.map(bookingDTO.getTravelPackage(), TravelPackages.class);
+        User user = modelMapper.map(bookingDTO.getUser(), User.class);
 
-        Optional<User> optUser = usersRepo.findById(bookingDTO.getUserId());
-        if (optUser.isEmpty()) {
-            throw new RuntimeException("User not found with ID: " + bookingDTO.getUserId());
-        }
+        Booking booking = new Booking();
+        booking.setUser(user);
+        booking.setTravelPackage(travelPackage);
+        booking.setStatus(bookingDTO.getStatus());
+        booking.setAdditionalRequests(bookingDTO.getAdditionalRequests());
+        booking.setNumberOfGuests(bookingDTO.getNumberOfGuests());
+        booking.setTravelDate(bookingDTO.getTravelDate());
+        booking.setUserEmail(bookingDTO.getUserEmail());
+        booking.setUserName(bookingDTO.getUser().getUsername());
 
-
-        Optional<Hotel> optHotel = hotelRepo.findById(bookingDTO.getHotelId());
-        if (optHotel.isEmpty()) {
-            throw new RuntimeException("Hotel not found with ID: " + bookingDTO.getHotelId());
-        }
-
-
-        booking.setUser(optUser.get());
-        booking.setHotel(optHotel.get());
-
-        bookingRepo.save(booking);
+        bookingRepository.save(booking);
     }
 
     @Override
-    public void update(BookingDTO bookingDTO) {
-        Optional<Booking> optBooking = bookingRepo.findById(bookingDTO.getId());
-        if (optBooking.isEmpty()) {
-            throw new RuntimeException("Booking not found with ID: " + bookingDTO.getId());
-        }
+    public List<BookingDTO> getAll() {
+        List<Booking> bookings = bookingRepository.findAll();
+        Type listType = new TypeToken<List<BookingDTO>>() {}.getType();
+        return modelMapper.map(bookings, listType); // This is line 68
+    }
 
-        Booking booking = modelMapper.map(bookingDTO, Booking.class);
+    @Override
+    public void save(Booking booking) {
+        bookingRepository.save(booking);
+    }
 
-
-        Optional<User> optUser = usersRepo.findById(bookingDTO.getUserId());
-        if (optUser.isEmpty()) {
-            throw new RuntimeException("User not found with ID: " + bookingDTO.getUserId());
-        }
-
-
-        Optional<Hotel> optHotel = hotelRepo.findById(bookingDTO.getHotelId());
-        if (optHotel.isEmpty()) {
-            throw new RuntimeException("Hotel not found with ID: " + bookingDTO.getHotelId());
-        }
-
-        booking.setUser(optUser.get());
-        booking.setHotel(optHotel.get());
-
-        bookingRepo.save(booking);
+    @Override
+    public List<BookingDTO> getByUserId(Long userId) {
+        List<Booking> bookings = bookingRepository.findByUserId(userId);
+        Type listType = new TypeToken<List<BookingDTO>>() {}.getType();
+        return modelMapper.map(bookings, listType);
     }
 
     @Override
     public void delete(Long id) {
-        if (!bookingRepo.existsById(id)) {
-            throw new RuntimeException("Booking not found with ID: " + id);
-        }
-        bookingRepo.deleteById(id);
+        bookingRepository.deleteById(id);
     }
 
     @Override
-    public BookingDTO getBookingById(Long id) {
-        Optional<Booking> booking = bookingRepo.findById(id);
-        if (booking.isEmpty()) {
-            throw new RuntimeException("Booking not found with ID: " + id);
-        }
-        return modelMapper.map(booking.get(), BookingDTO.class);
-    }
+    public void update(Long id, BookingDTO bookingDTO) {
+        Booking existingBooking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found."));
 
-    @Override
-    public List<BookingDTO> getAllBookings() {
-        List<Booking> bookings = bookingRepo.findAll();
-        return bookings.stream()
-                .map(booking -> modelMapper.map(booking, BookingDTO.class))
-                .toList();
-    }
+        existingBooking.setStatus(Booking.BookingStatus.valueOf(String.valueOf(bookingDTO.getStatus())));
 
-    @Override
-    public List<BookingDTO> getBookingsByUserId(Long userId) {
-        List<Booking> bookings = bookingRepo.findByUserId(userId);
-        return bookings.stream()
-                .map(booking -> modelMapper.map(booking, BookingDTO.class))
-                .toList();
+        bookingRepository.save(existingBooking);
     }
 }

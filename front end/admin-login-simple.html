@@ -162,7 +162,7 @@
           if (data.token) {
             localStorage.setItem("jwtToken", data.token);
             localStorage.setItem("userRole", data.role || "ADMIN"); // Assuming backend sends role in response
-            window.location.href = "admin-hotel-management.html";
+            window.location.href = "admin-dashboard.html";
           } else {
             throw new Error("Authentication token missing in response");
           }

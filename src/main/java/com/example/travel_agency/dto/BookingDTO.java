@@ -1,94 +1,146 @@
 package com.example.travel_agency.dto;
 
+import com.example.travel_agency.entity.Booking;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+
 import java.time.LocalDate;
+import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookingDTO {
+
     private Long id;
-    private Long userId;
-    private Long hotelId;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private double totalPrice;
-    private String status;
 
-    public BookingDTO() {}
+    private TravelPackagesDTO travelPackage;
+    private String packageName;
 
-    public BookingDTO(Long id, Long userId, Long hotelId, LocalDate checkInDate, LocalDate checkOutDate, double totalPrice, String status) {
+    private UserDTO user;
+    private String userEmail;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate travelDate;
+
+    private int numberOfGuests;
+    private String additionalRequests;
+
+    private Booking.BookingStatus status;
+
+    private List<String> guestNames; // Declared List property
+
+    public BookingDTO() {
+    }
+
+    public BookingDTO(Long id, TravelPackagesDTO travelPackage, String packageName,
+                      UserDTO user, String userEmail, LocalDate travelDate,
+                      int numberOfGuests, String additionalRequests,
+                      Booking.BookingStatus status, List<String> guestNames) {
         this.id = id;
-        this.userId = userId;
-        this.hotelId = hotelId;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.totalPrice = totalPrice;
+        this.travelPackage = travelPackage;
+        this.packageName = packageName;
+        this.user = user;
+        this.userEmail = userEmail;
+        this.travelDate = travelDate;
+        this.numberOfGuests = numberOfGuests;
+        this.additionalRequests = additionalRequests;
         this.status = status;
+        this.guestNames = guestNames;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public LocalDate getCheckInDate() {
-        return checkInDate;
-    }
-
-    public LocalDate getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public TravelPackagesDTO getTravelPackage() {
+        return travelPackage;
     }
 
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setTravelPackage(TravelPackagesDTO travelPackage) {
+        this.travelPackage = travelPackage;
     }
 
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setStatus(String status) {
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public LocalDate getTravelDate() {
+        return travelDate;
+    }
+
+    public void setTravelDate(LocalDate travelDate) {
+        this.travelDate = travelDate;
+    }
+
+    public int getNumberOfGuests() {
+        return numberOfGuests;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    public String getAdditionalRequests() {
+        return additionalRequests;
+    }
+
+    public void setAdditionalRequests(String additionalRequests) {
+        this.additionalRequests = additionalRequests;
+    }
+
+    public Booking.BookingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(Booking.BookingStatus status) {
         this.status = status;
+    }
+
+    public List<String> getGuestNames() {
+        return guestNames;
+    }
+
+    public void setGuestNames(List<String> guestNames) {
+        this.guestNames = guestNames;
     }
 
     @Override
     public String toString() {
         return "BookingDTO{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", hotelId=" + hotelId +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                ", totalPrice=" + totalPrice +
-                ", status='" + status + '\'' +
+                ", travelPackage=" + travelPackage +
+                ", packageName='" + packageName + '\'' +
+                ", user=" + user +
+                ", userEmail='" + userEmail + '\'' +
+                ", travelDate=" + travelDate +
+                ", numberOfGuests=" + numberOfGuests +
+                ", additionalRequests='" + additionalRequests + '\'' +
+                ", status=" + status +
+                ", guestNames=" + guestNames +
                 '}';
     }
 }

@@ -56,7 +56,14 @@ public class UserServiceImpl implements UserService {
 
         userRepo.save(user);
     }
-
+    @Override
+    public UserDTO findByEmail(String email) {
+        Optional<User> user = userRepo.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+        return modelMapper.map(user.get(), UserDTO.class);
+    }
     @Override
     public void update(UserDTO userDTO) {
         Optional<User> optUser = userRepo.findById(userDTO.getId());

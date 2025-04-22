@@ -1016,6 +1016,7 @@
         </footer>
     </main>
 </div>
+
 <script>
     $(document).ready(function () {
         const $sidebarToggle = $('#sidebar-toggle');
@@ -1038,7 +1039,7 @@
 
         let selectedPackageIds = [];
 
-        // Function to display toast messages
+// Function to display toast messages
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
@@ -1050,7 +1051,7 @@
             }, 2000);
         }
 
-        // Theme Preference
+// Theme Preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             $body.addClass('dark-mode');
@@ -1058,7 +1059,7 @@
             $themeText.text('Light Mode');
         }
 
-        // Sidebar Toggle
+// Sidebar Toggle
         $sidebarToggle.on('click', function () {
             $sidebar.toggleClass('collapsed');
             if (window.innerWidth < 992) {
@@ -1066,7 +1067,7 @@
             }
         });
 
-        // Theme Toggle
+// Theme Toggle
         $themeToggle.on('click', function () {
             $body.toggleClass('dark-mode');
             const isDark = $body.hasClass('dark-mode');
@@ -1075,7 +1076,7 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
 
-        // Modal Open
+// Modal Open
         $addPackageBtn.on('click', function () {
             $modalTitle.text('Add New Package');
             $packageForm[0].reset();
@@ -1083,12 +1084,12 @@
             $modal.addClass('active');
         });
 
-        // Modal Close
+// Modal Close
         $modalCloseBtn.add($modalCancelBtn).on('click', function () {
             $modal.removeClass('active');
         });
 
-        // Save (Add or Edit)
+// Save (Add or Edit)
         $modalSaveBtn.on('click', function () {
             if ($packageForm[0].checkValidity()) {
                 const packageData = {
@@ -1117,24 +1118,25 @@
                     "Authorization": `Bearer ${authToken}`
                 },
                 success: function (response) {
+                    const packages = response.data || []; // ✅ Adjust this if your backend wraps data
                     let packagesHtml = '';
-                    if (Array.isArray(response)) {
-                        response.forEach(pkg => {
+                    if (Array.isArray(packages)) {
+                        packages.forEach(pkg => {
                             packagesHtml += `
-                                <tr>
-                                    <td><input type="checkbox" class="select-package" data-id="${pkg.id}"></td>
-                                    <td>${pkg.id}</td>
-                                    <td>${pkg.name}</td>
-                                    <td>${pkg.description}</td>
-                                    <td>${pkg.duration}</td>
-                                    <td>${pkg.budget}</td>
-                                    <td>${pkg.includedServices}</td>
-                                    <td>
-                                        <button class="btn btn-primary edit-btn" data-id="${pkg.id}">Edit</button>
-                                        <button class="btn btn-danger delete-btn" data-id="${pkg.id}">Delete</button>
-                                    </td>
-                                </tr>
-                            `;
+                        <tr>
+                            <td><input type="checkbox" class="select-package" data-id="${pkg.id}"></td>
+                            <td>${pkg.id}</td>
+                            <td>${pkg.name}</td>
+                            <td>${pkg.description}</td>
+                            <td>${pkg.duration}</td>
+                            <td>${pkg.budget}</td>
+                            <td>${pkg.includedServices}</td>
+                            <td>
+                                <button class="btn btn-primary edit-btn" data-id="${pkg.id}">Edit</button>
+                                <button class="btn btn-danger delete-btn" data-id="${pkg.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `;
                         });
                     } else {
                         packagesHtml = `<tr><td colspan="8" class="text-center">No travel packages found.</td></tr>`;
@@ -1156,9 +1158,16 @@
             });
         }
 
+
         function addPackage(packageData) {
             const authToken = localStorage.getItem(AUTH_TOKEN_KEY);
             if (!authToken) return redirectToLogin();
+
+// Check if the price is valid (greater than zero)
+            if (parseFloat(packageData.budget) <= 0) {
+                showToast("Price must be greater than zero.", "error");
+                return;
+            }
 
             $.ajax({
                 url: "http://localhost:8080/api/travel-packages/add",
@@ -1323,13 +1332,14 @@
             window.location.href = "login.html";
         }
 
-        // Initial Check
+// Initial Check
         if (!localStorage.getItem(AUTH_TOKEN_KEY)) {
             redirectToLogin();
         } else {
             loadTravelPackages();
         }
     });
+
 </script>
 </body>
 </html>

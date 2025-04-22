@@ -2,50 +2,75 @@ package com.example.travel_agency.entity;
 
 import com.example.travel_agency.enums.BookingStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "booking") // Explicit table name
+@Table(name = "booking")
 public class Booking {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne
-        @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id", nullable = false)
         private User user;
 
-        @ManyToOne
-        @JoinColumn(name = "hotel_id", referencedColumnName = "id", nullable = false)
-        private Hotel hotel;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "package_id", nullable = false)
+        private TravelPackages travelPackage;
 
-        @Column(nullable = false)
-        private LocalDate checkInDate;
+        @Column(name = "user_name")
+        private String userName;
 
-        @Column(nullable = false)
-        private LocalDate checkOutDate;
+        @NotBlank(message = "User email is required")
+        @Email(message = "Invalid email format")
+        @Column(name = "user_email")
+        private String userEmail;
 
-        @Column(nullable = false)
-        private double totalPrice;
+        @FutureOrPresent(message = "Travel date must be in the present or future")
+        @Column(name = "travel_date")
+        private LocalDate travelDate;
+
+        @Min(value = 1, message = "Must have at least 1 guest")
+        @Column(name = "number_of_guests")
+        private int numberOfGuests;
+
+        @Column(name = "additional_requests")
+        private String additionalRequests;
 
         @Enumerated(EnumType.STRING)
-        @Column(nullable = false) // Ensure column is not null
+        @Column(name = "status")
         private BookingStatus status;
 
+        public enum BookingStatus {
+                PENDING, CONFIRMED, CANCELLED
+        }
+
+        // No-arg constructor
         public Booking() {
         }
 
-        public Booking(Long id, User user, Hotel hotel, LocalDate checkInDate, LocalDate checkOutDate, double totalPrice, BookingStatus status) {
+        // All-args constructor
+        public Booking(Long id, User user, TravelPackages travelPackage, String userName, String userEmail,
+                       LocalDate travelDate, int numberOfGuests, String additionalRequests, BookingStatus status) {
                 this.id = id;
                 this.user = user;
-                this.hotel = hotel;
-                this.checkInDate = checkInDate;
-                this.checkOutDate = checkOutDate;
-                this.totalPrice = totalPrice;
+                this.travelPackage = travelPackage;
+                this.userName = userName;
+                this.userEmail = userEmail;
+                this.travelDate = travelDate;
+                this.numberOfGuests = numberOfGuests;
+                this.additionalRequests = additionalRequests;
                 this.status = status;
         }
+
+        // Getters and setters
 
         public Long getId() {
                 return id;
@@ -63,36 +88,52 @@ public class Booking {
                 this.user = user;
         }
 
-        public Hotel getHotel() {
-                return hotel;
+        public TravelPackages getTravelPackage() {
+                return travelPackage;
         }
 
-        public void setHotel(Hotel hotel) {
-                this.hotel = hotel;
+        public void setTravelPackage(TravelPackages travelPackage) {
+                this.travelPackage = travelPackage;
         }
 
-        public LocalDate getCheckInDate() {
-                return checkInDate;
+        public String getUserName() {
+                return userName;
         }
 
-        public void setCheckInDate(LocalDate checkInDate) {
-                this.checkInDate = checkInDate;
+        public void setUserName(String userName) {
+                this.userName = userName;
         }
 
-        public LocalDate getCheckOutDate() {
-                return checkOutDate;
+        public String getUserEmail() {
+                return userEmail;
         }
 
-        public void setCheckOutDate(LocalDate checkOutDate) {
-                this.checkOutDate = checkOutDate;
+        public void setUserEmail(String userEmail) {
+                this.userEmail = userEmail;
         }
 
-        public double getTotalPrice() {
-                return totalPrice;
+        public LocalDate getTravelDate() {
+                return travelDate;
         }
 
-        public void setTotalPrice(double totalPrice) {
-                this.totalPrice = totalPrice;
+        public void setTravelDate(LocalDate travelDate) {
+                this.travelDate = travelDate;
+        }
+
+        public int getNumberOfGuests() {
+                return numberOfGuests;
+        }
+
+        public void setNumberOfGuests(int numberOfGuests) {
+                this.numberOfGuests = numberOfGuests;
+        }
+
+        public String getAdditionalRequests() {
+                return additionalRequests;
+        }
+
+        public void setAdditionalRequests(String additionalRequests) {
+                this.additionalRequests = additionalRequests;
         }
 
         public BookingStatus getStatus() {
@@ -108,10 +149,12 @@ public class Booking {
                 return "Booking{" +
                         "id=" + id +
                         ", user=" + user +
-                        ", hotel=" + hotel +
-                        ", checkInDate=" + checkInDate +
-                        ", checkOutDate=" + checkOutDate +
-                        ", totalPrice=" + totalPrice +
+                        ", travelPackage=" + travelPackage +
+                        ", userName='" + userName + '\'' +
+                        ", userEmail='" + userEmail + '\'' +
+                        ", travelDate=" + travelDate +
+                        ", numberOfGuests=" + numberOfGuests +
+                        ", additionalRequests='" + additionalRequests + '\'' +
                         ", status=" + status +
                         '}';
         }
