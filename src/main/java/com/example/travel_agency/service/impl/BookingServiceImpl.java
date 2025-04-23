@@ -1,6 +1,7 @@
 package com.example.travel_agency.service.impl;
 
 import com.example.travel_agency.dto.BookingDTO;
+import com.example.travel_agency.dto.UserDTO;
 import com.example.travel_agency.entity.Booking;
 import com.example.travel_agency.entity.Hotel;
 import com.example.travel_agency.entity.TravelPackages;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -65,8 +68,21 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingDTO> getAll() {
         List<Booking> bookings = bookingRepository.findAll();
-        Type listType = new TypeToken<List<BookingDTO>>() {}.getType();
-        return modelMapper.map(bookings, listType); // This is line 68
+
+        List<BookingDTO> bots = new ArrayList<>();
+        for (Booking booking : bookings) {
+            BookingDTO bookingDTO = new BookingDTO();
+            bookingDTO.setId(booking.getId());
+            bookingDTO.setPackageName(booking.getTravelPackage().getName());
+            bookingDTO.setStatus(booking.getStatus());
+            bookingDTO.setAdditionalRequests(booking.getAdditionalRequests());
+            bookingDTO.setNumberOfGuests(booking.getNumberOfGuests());
+            bookingDTO.setTravelDate(booking.getTravelDate());
+            bookingDTO.setUserEmail(booking.getUserEmail());
+            bookingDTO.setUser(modelMapper.map(booking.getUser(), UserDTO.class));
+            bots.add(bookingDTO);
+        }
+        return bots;
     }
 
     @Override
@@ -77,7 +93,8 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingDTO> getByUserId(Long userId) {
         List<Booking> bookings = bookingRepository.findByUserId(userId);
-        Type listType = new TypeToken<List<BookingDTO>>() {}.getType();
+        Type listType = new TypeToken<List<BookingDTO>>() {
+        }.getType();
         return modelMapper.map(bookings, listType);
     }
 

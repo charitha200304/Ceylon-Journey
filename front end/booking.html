@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Your Trip - Ceylon Journeys</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- All CSS styles included directly in the HTML file -->
   <style>
     /* Reset and Base Styles */
@@ -1110,14 +1110,7 @@
             <div class="form-group">
               <label for="package-type">Chosen Package</label>
               <select id="package-type" required>
-                <option value="">Select a package</option>
-                <option value="cultural">Cultural Heritage Tour (7 Days)</option>
-                <option value="beach">Tropical Beach Getaway (5 Days)</option>
-                <option value="adventure">Adventure & Wildlife Safari (8 Days)</option>
-                <option value="family">Family Fun Package (6 Days)</option>
-                <option value="honeymoon">Romantic Honeymoon Escape (7 Days)</option>
-                <option value="education">Educational Discovery Tour (10 Days)</option>
-                <option value="custom">Custom Package</option>
+
               </select>
             </div>
 
@@ -1136,7 +1129,7 @@
             </div>
 
             <div class="form-group">
-              <label for="full-name">Full Name</label>
+              <label for="full-name">User Name</label>
               <input type="text" id="full-name" required>
             </div>
 
@@ -1151,7 +1144,7 @@
             </div>
 
             <div class="form-buttons">
-              <button type="button" class="btn btn-primary next-step" data-next="2">Continue to Payment</button>
+              <button type="button" class="btn btn-primary next-step" id="btn-booking">Continue to Payment</button>
             </div>
           </form>
         </div>
@@ -1617,5 +1610,75 @@
     }
   });
 </script>
+
+<script>
+
+  $.ajax({
+    url: 'http://localhost:8080/api/travel-packages/getAll', // Replace with your API endpoint URL
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      console.log('Packages fetched successfully:', data);
+      const packages = data.data; // Assuming the response contains an array of packages
+      const packageSelect = document.getElementById('package-type');
+
+      packages.forEach(pkg => {
+        const option = document.createElement('option');
+        option.value = pkg.id;
+        option.textContent = `${pkg.name}`;
+        packageSelect.appendChild(option);
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error('Error fetching packages:', error);
+    }
+  })
+</script>
+
+<script>
+
+  $('#btn-booking').on('click', function() {
+    console.log('Booking button clicked');
+    const bookingData = {
+      userName: $('#full-name').val().trim(), // Assuming 'full-name' is the ID of the full name input field
+      travelDate: $('#travel-date').val(),
+      status: 'PENDING', // Assuming the initial status is "Pending"
+      numberOfGuests: parseInt($('#guests').val()), // Assuming 'guests' is the ID of the number of guests input field
+      userEmail: $('#email').val().trim(),
+      packageId: parseInt($('#package-type').val()), // Assuming 'package-type' is the ID of the package selection dropdown
+      userId: localStorage.getItem('userId'), // Assuming you have stored the user ID in local storage
+
+    };
+
+    console.log('Booking Data:', bookingData); // Log the booking data for debugging
+
+    // AJAX request to send booking data to the server
+    $.ajax({
+      url: 'http://localhost:8080/api/bookings/save', // Replace with your API endpoint URL
+      type: 'POST', // Use POST method to create a new booking
+      contentType: 'application/json', // Specify the content type as JSON
+      data: JSON.stringify(bookingData), // Convert the bookingData object to a JSON string
+      headers: {
+        "Authorization": 'Bearer ' + localStorage.getItem('authToken')
+      },
+      success: function(response) {
+        // Handle successful response from the server
+        console.log('Booking successfully saved:', response);
+        alert('Your booking has been successfully submitted!');
+        // Optionally, redirect the user to a confirmation page or update the UI
+      },
+      error: function(xhr, status, error) {
+        // Handle errors (e.g., server error, validation failure)
+        console.error('Error saving booking:', error);
+        alert('An error occurred while submitting your booking. Please try again.');
+      }
+    });
+    // Proceed to the next step
+    $(this).attr('data-next', '2');
+  });
+
+</script>
+
+
 </body>
 </html>

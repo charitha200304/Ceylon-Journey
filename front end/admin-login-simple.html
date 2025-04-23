@@ -160,7 +160,7 @@
 
           // Handle successful login
           if (data.token) {
-            localStorage.setItem("jwtToken", data.token);
+            localStorage.setItem("authToken", data.token);
             localStorage.setItem("userRole", data.role || "ADMIN"); // Assuming backend sends role in response
             window.location.href = "admin-dashboard.html";
           } else {

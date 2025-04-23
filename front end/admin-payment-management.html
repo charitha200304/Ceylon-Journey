@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         /* Admin Dashboard Styles */
@@ -955,10 +956,10 @@
                             <input type="checkbox" id="select-all-payments">
                         </th>
                         <th>ID</th>
-                        <th>User ID</th>
-                        <th>Amount</th>
-                        <th>Payment Method</th>
-                        <th>Status</th>
+                        <th>Card Holder Name</th>
+                        <th>Card Number</th>
+                        <th>Cvv</th>
+                        <th>Expiration Date</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -991,29 +992,20 @@
                 <div class="modal-body">
                     <form id="payment-form">
                         <div class="form-group">
-                            <label for="user-id">User ID</label>
-                            <input type="number" id="user-id" name="user-id" required>
+                            <label for="Card-HolderName">Card Holder Name</label>
+                            <input type="text" id="Card-HolderName" name="Card-HolderName" required>
                         </div>
                         <div class="form-group">
-                            <label for="payment-amount">Amount</label>
-                            <input type="number" id="payment-amount" name="payment-amount" step="0.01" required>
+                            <label for="Card-Number">Card Number</label>
+                            <input type="number" id="Card-Number" name="Card-Number" step="1" required>
                         </div>
                         <div class="form-group">
-                            <label for="payment-method">Payment Method</label>
-                            <select id="payment-method" name="payment-method" required>
-                                <option value="">Select payment method</option>
-                                <option value="CREDIT_CARD">Credit Card</option>
-                                <option value="BANK_TRANSFER">Bank Transfer</option>
-                            </select>
+                            <label for="Cvv">Cvv</label>
+                            <input type="number" id="Cvv" name="Cvv" step="1" required>
                         </div>
                         <div class="form-group">
-                            <label for="payment-status">Payment Status</label>
-                            <select id="payment-status" name="payment-status" required>
-                                <option value="">Select payment status</option>
-                                <option value="COMPLETED">Completed</option>
-                                <option value="PENDING">Pending</option>
-                                <option value="FAILED">Failed</option>
-                            </select>
+                            <label for="Expire-Date">Expire Date</label>
+                            <input type="text" id="Expire-Date" name="Expire-Date" required>
                         </div>
                     </form>
                 </div>
@@ -1121,5 +1113,116 @@
         }
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // First check if user is logged in
+        checkLoginStatus();
+
+        // Open modal
+        $('#add-payment-btn').click(function () {
+            if (!isLoggedIn()) {
+                showLoginAlert();
+                return;
+            }
+            $('#modal-title').text('Add New Payment');
+            $('#payment-form')[0].reset();
+            $('#payment-modal').fadeIn();
+        });
+
+        // Close modal
+        $('.modal-close, #modal-cancel-btn').click(function () {
+            $('#payment-modal').fadeOut();
+        });
+
+        // Save payment
+        $('#modal-save-btn').click(function (e) {
+            e.preventDefault();
+
+            if (!isLoggedIn()) {
+                showLoginAlert();
+                return;
+            }
+
+            const token = localStorage.getItem("token");
+            const userId = localStorage.getItem("userId") || 1; // Default to 1 if not set
+
+            const paymentData = {
+                cardHolderName: $('#Card-HolderName').val(),
+                cardNumber: $('#Card-Number').val(),
+                cvv: $('#Cvv').val(),
+                expireDate: $('#Expire-Date').val(),
+                userId: userId
+            };
+
+            if (!validatePayment(paymentData)) {
+                return;
+            }
+
+            console.log("Submitting payment:", paymentData);
+
+            $.ajax({
+                url: 'http://localhost:8080/api/payments/save',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(paymentData),
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    alert("Payment saved successfully!");
+                    $('#payment-modal').fadeOut();
+                    // Refresh payment list here if needed
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        showLoginAlert();
+                    } else {
+                        alert("Error: " + (xhr.responseJSON?.message || "Failed to save payment"));
+                    }
+                }
+            });
+        });
+
+        // Helper functions
+        function isLoggedIn() {
+            return !!localStorage.getItem("token");
+        }
+
+        function checkLoginStatus() {
+            if (!isLoggedIn()) {
+                console.log("User not logged in");
+                // You might want to redirect to login page here
+            }
+        }
+
+        function showLoginAlert() {
+            alert("Please log in first. You will be redirected to login page.");
+            // window.location.href = "/login"; // Uncomment to redirect
+        }
+
+        function validatePayment(data) {
+            if (!data.cardHolderName || !data.cardNumber || !data.cvv || !data.expireDate) {
+                alert("Please fill in all fields");
+                return false;
+            }
+
+            // Basic card number validation
+            if (data.cardNumber.replace(/\s/g, '').length < 16) {
+                alert("Please enter a valid card number");
+                return false;
+            }
+
+            // Basic CVV validation
+            if (data.cvv.length < 3) {
+                alert("Please enter a valid CVV");
+                return false;
+            }
+
+            return true;
+        }
+    });
+</script>
+
 </body>
 </html>

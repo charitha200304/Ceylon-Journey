@@ -71,13 +71,11 @@ public class TravelPackagesServiceImpl implements TravelPackagesService {
                 .toList();
     }
     @Override
-    public TravelPackagesDTO getPackageByName(String name) {
+    public TravelPackagesDTO getPackageByName(Long id) {
         // Fetch the package by name
-        TravelPackages packageEntity = travelPackageRepo.findByName(name);
+        TravelPackages packageEntity = travelPackageRepo.findById(id).orElse(null);
         if (packageEntity == null) {
-            // Handle the case when package is not found
-            System.out.println("No package found with name: " + name);
-            return null; // Return null instead of throwing an exception
+            throw new RuntimeException("Package not found with ID: " + id);
         }
         return modelMapper.map(packageEntity, TravelPackagesDTO.class);
     }

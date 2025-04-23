@@ -357,6 +357,7 @@
           if (response && response.token) {
             // Store the token (e.g., in localStorage, sessionStorage, or a cookie)
             localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userId', username); // Store user ID if needed
             // Redirect the user to a protected page (e.g., dashboard)
             window.location.href = 'index.html'; // Change to your actual dashboard page.
           } else {

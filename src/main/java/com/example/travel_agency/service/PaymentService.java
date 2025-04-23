@@ -5,10 +5,12 @@ import com.example.travel_agency.dto.PaymentDTO;
 import java.util.List;
 
 public interface PaymentService {
-    void save(PaymentDTO paymentDTO);
-    void update(PaymentDTO paymentDTO);
-    void delete(Long id);
+
+    PaymentDTO savePayment(PaymentDTO paymentDTO);
+
     PaymentDTO getPaymentById(Long id);
+
     List<PaymentDTO> getAllPayments();
-    List<PaymentDTO> getPaymentsByUserId(Long userId);
+
+    void deletePayment(Long id);
 }

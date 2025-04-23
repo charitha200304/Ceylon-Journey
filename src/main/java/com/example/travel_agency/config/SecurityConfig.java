@@ -47,7 +47,11 @@ public class SecurityConfig {
             "/static/**",
             "/css/**",
             "/js/**",
-            "/images/**"
+            "/images/**",
+            "/api/payments/getAll",
+            "/api/payments/save",
+            "/api/payments/",
+            "/api/payments/all"
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -56,7 +60,11 @@ public class SecurityConfig {
             "/api/user/getByRole/**",
             "/api/user/getByEmail/**",
             "/api/user/deleteUser/**",
-            "/user-management"
+            "/user-management",
+            "/api/payments/getAll",
+            "/api/payments/save",
+            "/api/payments/",
+            "/api/payments/all"
     };
 
     @Bean

@@ -1081,14 +1081,14 @@
                 method: 'POST',
                 contentType: 'application/json',
                 headers: {
-                    "Authorization": 'Bearer ' + localStorage.getItem('jwtToken')
+                    "Authorization": 'Bearer ' + localStorage.getItem('authToken')
                 },
                 data: JSON.stringify(bookingData),
                 success: function (response) {
                     handleSuccess(response, 'Booking saved successfully!');
                 },
                 error: function (xhr) {
-                    handleError(xhr, 'save');
+                    // handleError(xhr, 'save');
                 }
             });
         });
@@ -1104,7 +1104,7 @@
                 url: API_BASE_URL + '/delete/' + id,
                 method: 'DELETE',
                 headers: {
-                    "Authorization": 'Bearer ' + localStorage.getItem('jwtToken')
+                    "Authorization": 'Bearer ' + localStorage.getItem('authToken')
                 },
                 success: function (response) {
                     handleSuccess(response, 'Booking deleted successfully!');
@@ -1117,13 +1117,13 @@
 
         // ========== LOAD BOOKINGS ==========
         function loadBookings() {
-            if (!checkTokenValidity()) return;
+            // if (!checkTokenValidity()) return;
 
             $.ajax({
                 url: API_BASE_URL + '/all',
                 method: 'GET',
                 headers: {
-                    "Authorization": 'Bearer ' + localStorage.getItem('jwtToken')
+                    "Authorization": 'Bearer ' + localStorage.getItem('authToken')
                 },
                 success: function (response) {
                     const tbody = $('table.data-table tbody');
@@ -1141,11 +1141,11 @@
                                 '<td><input type="checkbox"></td>' +
                                 '<td>' + booking.id + '</td>' +
                                 '<td>' + (booking.travelDate || '-') + '</td>' +
+                                '<td>' + (booking.packageName || '-') + '</td>' +
                                 '<td>' + booking.status + '</td>' +
-                                '<td>' + (booking.numberOfGuests || '-') + '</td>' +
                                 '<td>' + (booking.userEmail || '-') + '</td>' +
                                 '<td>' + (booking.packageId || '-') + '</td>' +
-                                '<td>' + booking.userId + '</td>' +
+                                '<td>' + booking.user.id + '</td>' +
                                 '<td>' +
                                 '<button class="btn btn-danger delete-btn" data-id="' + booking.id + '">Delete</button>' +
                                 '</td>' +
@@ -1158,7 +1158,7 @@
                     }
                 },
                 error: function (xhr) {
-                    handleError(xhr, 'load');
+                    // handleError(xhr, 'load');
                 }
             });
         }
@@ -1200,14 +1200,13 @@
             console.error(action + ' error:', xhr);
 
             if (xhr.status === 401 || xhr.status === 403) {
-                localStorage.removeItem('jwtToken');
                 window.location.href = 'login.html';
             }
         }
 
         // ========== TOKEN VALIDITY ==========
         function checkTokenValidity() {
-            const jwtToken = localStorage.getItem('jwtToken');
+            const jwtToken = localStorage.getItem('authToken');
             if (!jwtToken) {
                 alert("Please login first!");
                 window.location.href = 'login.html';

@@ -1108,7 +1108,7 @@
         });
 
         function loadTravelPackages() {
-            const authToken = localStorage.getItem(AUTH_TOKEN_KEY);
+            const authToken = localStorage.getItem("authToken");
             if (!authToken) return redirectToLogin();
 
             $.ajax({
@@ -1150,7 +1150,7 @@
                     console.error("Error loading packages:", xhr.responseText || error);
                     if (xhr.status === 403) {
                         showToast("Access denied. Please log in.", "error");
-                        redirectToLogin();
+                        // redirectToLogin();
                     } else {
                         showToast("Error loading packages: " + (xhr.responseText || error), "error");
                     }
@@ -1333,12 +1333,14 @@
         }
 
 // Initial Check
-        if (!localStorage.getItem(AUTH_TOKEN_KEY)) {
+        if (!localStorage.getItem("authToken")) {
             redirectToLogin();
         } else {
             loadTravelPackages();
         }
     });
+
+
 
 </script>
 </body>

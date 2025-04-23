@@ -13,13 +13,19 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendBookingConfirmationEmail(String toEmail, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(toEmail);
-        message.setSubject(subject);
-        message.setText(body);
-        message.setFrom("charithachiranjeewa@gmail.com");
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(toEmail);
+            message.setSubject(subject);
+            message.setText(body);
+            message.setFrom("charithachiranjeewa@gmail.com");
 
-        mailSender.send(message);
-        System.out.println(" Email sent successfully to: " + toEmail);
+            mailSender.send(message);
+            System.out.println("✅ Email sent successfully to: " + toEmail);
+        } catch (Exception e) {
+            System.err.println("❌ Failed to send email: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 }

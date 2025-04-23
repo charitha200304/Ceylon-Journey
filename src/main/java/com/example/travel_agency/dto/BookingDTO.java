@@ -19,6 +19,16 @@ public class BookingDTO {
     private UserDTO user;
     private String userEmail;
 
+    private Long packageId;
+
+    public Long getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(Long packageId) {
+        this.packageId = packageId;
+    }
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate travelDate;
 
@@ -31,6 +41,8 @@ public class BookingDTO {
 
     public BookingDTO() {
     }
+
+
 
     public BookingDTO(Long id, TravelPackagesDTO travelPackage, String packageName,
                       UserDTO user, String userEmail, LocalDate travelDate,

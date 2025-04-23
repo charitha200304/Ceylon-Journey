@@ -12,11 +12,9 @@ import com.example.travel_agency.service.impl.BookingServiceImpl;
 import com.example.travel_agency.service.impl.EmailServiceImpl;
 import com.example.travel_agency.service.impl.UserServiceImpl;
 import com.example.travel_agency.util.VarList;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,8 +45,7 @@ public class BookingController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")  // ✅ Requires role in token
-    public ResponseEntity<ResponseDTO> save(@Valid @RequestBody BookingDTO bookingDTO) {
+    public ResponseEntity<ResponseDTO> save(@RequestBody BookingDTO bookingDTO) {
         System.out.println("Booking save controller");
 
         UserDTO userDto = userServiceImpl.findByEmail(bookingDTO.getUserEmail());
@@ -57,7 +54,7 @@ public class BookingController {
                     .body(new ResponseDTO(VarList.Bad_Request, "Your email is not registered with us", null));
         }
 
-        TravelPackagesDTO packageDTO = packageService.getPackageByName(bookingDTO.getPackageName());
+        TravelPackagesDTO packageDTO = packageService.getPackageByName(bookingDTO.getPackageId());
         if (packageDTO == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseDTO(VarList.Bad_Request, "Package not found with the name: " + bookingDTO.getPackageName(), null));
@@ -84,7 +81,7 @@ public class BookingController {
                         "📞 Contact: 071 685 5976"
         );
 
-        return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Booking Saved Successfully", bookingDTO));
+        return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Booking Saved Successfully", null));
     }
 
     @GetMapping("/all")
