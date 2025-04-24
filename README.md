@@ -9,7 +9,7 @@
   <img src="https://github.com/charitha200304/Ceylon-Journey/blob/18b66ff1557923e22d28ee4a79f3eca5ab56fa90/Screenshot%20(221).png" alt="Ceylon Journey Banner" width="800">
 
   <img src="https://github.com/charitha200304/Ceylon-Journey/blob/ea15fd61207b77034682ef355d27822608dcb21e/Screenshot%20(223).png" alt="Ceylon Journey Banner" width="800">
-  <img src="" alt="Ceylon Journey Banner" width="800">
+  <img src="https://github.com/charitha200304/Ceylon-Journey/blob/75c1a603da9e6ab85a00e3e98b71216f3635b2d2/Screenshot%20(224).png" alt="Ceylon Journey Banner" width="800">
   <em>🚀 Discover hidden waterfalls, ancient temples, and spicy crab curries – all with local soul! 🍛🙏</em>
 </p>
 
